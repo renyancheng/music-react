@@ -4,9 +4,9 @@ import { useRequest } from "ahooks";
 import { useSnackbar } from "notistack";
 import { connect } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
-import { loginByPhone } from "../api";
-import { userLogin } from "../redux/actions/auth";
-import LoginForm from "../components/Form/LoginForm";
+import { loginByPhone } from "../../api";
+import { userLogin } from "../../redux/actions/auth";
+import LoginForm from "../../components/Form/LoginForm";
 
 export const Login = ({ userLogin }) => {
   const { enqueueSnackbar } = useSnackbar();
