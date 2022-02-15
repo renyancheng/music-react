@@ -12,7 +12,11 @@ export default function Providers({ children }) {
     <>
       <StoreProvider store={store}>
         <ThemeProvider theme={theme}>
-          <ConfirmProvider>
+          <ConfirmProvider defaultOptions={{
+            title:"提示",
+            confirmationText: "确定",
+            cancellationText: "取消"
+          }}>
             <SnackbarProvider
               maxSnack={3}
               anchorOrigin={{

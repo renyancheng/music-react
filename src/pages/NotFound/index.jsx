@@ -1,10 +1,10 @@
 import React from "react";
+import Error from "../../components/Error";
 
 export default function NotFound() {
   return (
-    <div>
-      404 NotFound
-      <div>客官，你好像迷路了~</div>
-    </div>
+    <>
+      <Error errorCode={404} />
+    </>
   );
 }

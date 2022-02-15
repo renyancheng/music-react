@@ -14,12 +14,7 @@ export default function RequireAuth({ children }) {
       {isLogin ? (
         <>{children}</>
       ) : (
-        <Navigate
-          to={{
-            pathname: "/login",
-            state: { from: location.pathname },
-          }}
-        />
+        <Navigate to="/login" state={{ from: location.pathname }} />
       )}
     </>
   );

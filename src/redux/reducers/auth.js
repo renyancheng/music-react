@@ -1,5 +1,5 @@
-import { set, get } from "lockr";
-import { USER_LOGIN } from "../constant";
+import { set, get, rm } from "lockr";
+import { USER_LOGIN, USER_LOGOUT } from "../constant";
 
 const initState = {
   profile: get("profile") || null,
@@ -9,6 +9,7 @@ const initState = {
 
 export default function auth(perState = initState, { type, data }) {
   switch (type) {
+    // 用户登录
     case USER_LOGIN:
       set("profile", data.profile);
       set("cookie", data.cookie);
@@ -17,6 +18,16 @@ export default function auth(perState = initState, { type, data }) {
         profile: data.profile,
         cookie: data.cookie,
         isLogin: true,
+      };
+    // 用户退出登录
+    case USER_LOGOUT:
+      rm("profile");
+      rm("cookie");
+      rm("isLogin");
+      return {
+        profile: null,
+        cookie: null,
+        isLogin: null,
       };
     default:
       return perState;

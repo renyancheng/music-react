@@ -15,6 +15,8 @@ export const Login = ({ userLogin }) => {
 
   const location = useLocation();
 
+  // console.log(location)
+
   const { loading, run, runAsync } = useRequest(loginByPhone, { manual: true });
 
   const onSubmit = async ({ phone, password }) => {
@@ -25,7 +27,7 @@ export const Login = ({ userLogin }) => {
       result.msg = "登录成功";
       userLogin(result);
       setTimeout(() => {
-        navigate(location.state.from || "/", { replace: true });
+        navigate(location.state?.from || "/", { replace: true });
       }, 1000);
     } else {
       variant = "error";
