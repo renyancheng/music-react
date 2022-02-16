@@ -6,6 +6,7 @@ import App from "./App";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import User from "./pages/User";
+import Playlist from "./pages/Playlist";
 import NotFound from "./pages/NotFound";
 
 export const Router = ({ isLogin }) => {
@@ -16,6 +17,7 @@ export const Router = ({ isLogin }) => {
           <Route path="/" element={<App />}>
             <Route path="/" element={<Home />}></Route>
             <Route path="/user/home/:uid" element={<User />}></Route>
+            <Route path="/playlist/:id" element={<Playlist />}></Route>
             <Route
               path="/login"
               element={<>{isLogin ? <Navigate to="/" /> : <Login />}</>}

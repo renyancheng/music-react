@@ -151,7 +151,7 @@ export const Header = ({ isLogin, profile, userLogout }) => {
             sx={{
               flexGrow: 1,
               display: { xs: "none", md: "flex" },
-              justifyContent: "center",
+              justifyContent: "flex-start",
             }}
           >
             {navs.map((nav) => {

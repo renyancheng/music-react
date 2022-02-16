@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Card,
   CardMedia,
@@ -11,15 +12,20 @@ import {
 } from "@mui/material";
 import numeral from "numeral";
 
-const Playlists = ({ playlists }) => {
+const PlaylistList = ({ playlistList }) => {
+  const navigate = useNavigate();
   return (
     <>
       <Grid spacing={2} container>
-        {playlists.map((playlist) => {
+        {playlistList?.map((playlist) => {
           return (
             <Grid xs={6} sm={3} md={3} lg={2.4} key={playlist.id} item>
               <Card>
-                <CardActionArea>
+                <CardActionArea
+                  onClick={() => {
+                    navigate(`/playlist/${playlist.id}`);
+                  }}
+                >
                   <CardMedia
                     component="img"
                     alt="green iguana"
@@ -65,4 +71,4 @@ const Playlists = ({ playlists }) => {
   );
 };
 
-export default Playlists;
+export default PlaylistList;

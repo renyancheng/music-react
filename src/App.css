@@ -1,5 +1,13 @@
-html,
-body {
+* {
+  outline: none;
+}
+ƒ .scrollbar-hidden,
+html {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   margin: 0;
   padding: 0;
+}
+::-webkit-scrollbar {
+  display: none;
 }
