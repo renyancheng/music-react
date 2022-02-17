@@ -21,7 +21,7 @@ import Description from "../../Description";
 
 moment.locale("zh-cn");
 
-export const PlaylistDetail = ({ detail, profile }) => {
+export const PlaylistDetail = ({ detail, profile, playAll }) => {
   return (
     <>
       <Card sx={{ display: "flex" }}>
@@ -83,6 +83,7 @@ export const PlaylistDetail = ({ detail, profile }) => {
                   <Button
                     variant="contained"
                     startIcon={<Icon>play_arrow</Icon>}
+                    onClick={() => playAll()}
                   >
                     播放
                   </Button>

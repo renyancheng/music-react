@@ -6,7 +6,8 @@ export const urls = {
   getUserDetail: "/user/detail",
   getPersonalizedPlaylist: "/personalized",
   getPlaylistDetail: "/playlist/detail",
-  getSongDetail: "/song/detail"
+  getSongDetail: "/song/detail",
+  getSongUrl: "/song/url",
 };
 
 // 手机号登录
@@ -32,4 +33,9 @@ export function getPlaylistDetail(id) {
 // 获取歌曲详情
 export function getSongDetail(ids) {
   return get(urls.getSongDetail, { ids });
+}
+
+// 获取音乐Url
+export function getSongUrl(id) {
+  return get(urls.getSongUrl, { id });
 }

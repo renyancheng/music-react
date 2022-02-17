@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { connect } from "react-redux";
 import { Skeleton, Box } from "@mui/material";
 import { useRequest } from "ahooks";
+import { useSnackbar } from "notistack";
 import { getPlaylistDetail, getSongDetail } from "../../api";
+import { addSongs } from "../../redux/actions/player";
 import PlaylistDetail from "../../components/Playlist/Detail";
 import SongList from "../../components/SongList";
 import Error from "../../components/Error";
@@ -11,8 +14,9 @@ function getStringTrackIds(trackIds) {
   return trackIds.map((track) => track.id).join(",");
 }
 
-const Playlist = () => {
+const Playlist = ({ addSongs }) => {
   const params = useParams();
+  const { enqueueSnackbar } = useSnackbar();
   const { data: playlist, loading: loadingPlaylist } = useRequest(
     getPlaylistDetail,
     {
@@ -37,7 +41,13 @@ const Playlist = () => {
     }
   }, [playlist]);
 
-  
+  const handlePlayAll = () => {
+    addSongs({
+      songs: songList,
+      replace: true,
+    });
+    enqueueSnackbar("已添加到播放列表");
+  };
 
   return (
     <>
@@ -53,7 +63,10 @@ const Playlist = () => {
           ) : (
             <>
               <Box sx={{ mb: 2 }}>
-                <PlaylistDetail detail={playlist.playlist} />
+                <PlaylistDetail
+                  detail={playlist.playlist}
+                  playAll={handlePlayAll}
+                />
               </Box>
               <Box>
                 <SongList songList={songList} />
@@ -66,4 +79,6 @@ const Playlist = () => {
   );
 };
 
-export default Playlist;
+export default connect(() => ({}), {
+  addSongs,
+})(Playlist);

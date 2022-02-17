@@ -24,7 +24,7 @@ export default function Providers({ children }) {
               maxSnack={3}
               anchorOrigin={{
                 vertical: "bottom",
-                horizontal: "right",
+                horizontal: "center",
               }}
               TransitionComponent={Grow}
             >
