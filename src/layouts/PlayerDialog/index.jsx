@@ -80,7 +80,7 @@ const PlayerDialog = () => {
               direction="row"
               justifyContent="center"
               alignItems="center"
-              sx={{ position: "absolute"}}
+              sx={{ position: "absolute" }}
             >
               <Grid xs={12} sm={6} item container justifyContent="center">
                 <Stack direction="column" spacing={1.2}>
