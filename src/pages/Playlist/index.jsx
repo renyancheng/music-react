@@ -7,7 +7,7 @@ import { useSnackbar } from "notistack";
 import { getPlaylistDetail, getSongDetail } from "../../api";
 import { addSongs } from "../../redux/actions/player";
 import PlaylistDetail from "../../components/Playlist/Detail";
-import SongList from "../../components/SongList";
+import SongList from "../../components/SongList/index";
 import Error from "../../components/Error";
 
 function getStringTrackIds(trackIds) {
