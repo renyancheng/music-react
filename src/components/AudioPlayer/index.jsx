@@ -24,6 +24,7 @@ const AudioPlayer = ({ src, currentSong, changeSong, current }) => {
     // onplay: () => console.log("播放开始"),
     onend: () => changeSong(current + 1),
   });
+
   const { percentComplete, duration, seek, position } = useAudioPosition({
     highRefreshRate: true,
   });
@@ -32,7 +33,11 @@ const AudioPlayer = ({ src, currentSong, changeSong, current }) => {
   };
 
   useEffect(() => {
-    if(ready || loading) setProgress(0);
+    setProgress(parseInt((position / duration) * 100));
+  }, [position]);
+
+  useEffect(() => {
+    if (ready || loading) setProgress(0);
   }, [ready]);
 
   if (!ready && !loading) return <div>没有音频可播放</div>;

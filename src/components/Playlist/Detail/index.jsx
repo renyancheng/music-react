@@ -87,7 +87,7 @@ export const PlaylistDetail = ({ detail, profile, playAll }) => {
                   >
                     播放
                   </Button>
-                  {detail.creator.userId === profile.userId ? (
+                  {detail.creator.userId === profile?.userId ? (
                     <>
                       <Button
                         variant="outlined"

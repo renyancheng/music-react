@@ -23,9 +23,10 @@ export default function Providers({ children }) {
             <SnackbarProvider
               maxSnack={3}
               anchorOrigin={{
-                vertical: "bottom",
+                vertical: "top",
                 horizontal: "center",
               }}
+              // dense
               TransitionComponent={Grow}
             >
               <AudioPlayerProvider>{children}</AudioPlayerProvider>
