@@ -8,6 +8,7 @@ import {
   IconButton,
   Slider,
 } from "@mui/material";
+import pubsub from "pubsub-js";
 
 const formatTime = (second) =>
   new Date(second * 1000).toISOString().substr(15, 4);
@@ -29,11 +30,12 @@ const AudioPlayer = ({ src, currentSong, changeSong, current }) => {
     highRefreshRate: true,
   });
   const goToPosition = (_, percentage) => {
-    seek(parseInt((duration * percentage) / 100));
+    seek(parseInt((duration * percentage) / 100) || 0);
   };
 
   useEffect(() => {
-    setProgress(parseInt((position / duration) * 100));
+    pubsub.publish("CURRENT_TIME", position);
+    setProgress(parseInt((position / duration) * 100) || 0);
   }, [position]);
 
   useEffect(() => {

@@ -12,6 +12,7 @@ const initState = {
   setting: get("setting") || {
     current: 0,
     src: null,
+    lyric: null,
     volume: 1,
     mode: "order", // random, once
   },

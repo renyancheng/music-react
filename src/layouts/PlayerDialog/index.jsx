@@ -20,37 +20,50 @@ import {
   Box,
   getBottomNavigationUtilityClass,
 } from "@mui/material";
+import pubsub from "pubsub-js";
 import { useRequest, useResponsive } from "ahooks";
 import { updateSetting } from "../../redux/actions/player";
-import { getSongUrl } from "../../api";
+import { getSongUrl, getSongLyric } from "../../api";
 import AudioPlayer from "../../components/AudioPlayer";
 import Lyric from "../../components/Lyric";
 
-const PlayerDialog = ({ songs, current, src, updateSetting }) => {
+const PlayerDialog = ({ songs, current, src, updateSetting, lyric }) => {
   const { md } = useResponsive();
 
   const [playerDialog, setPlayerDialog] = useState(false);
-  const [songUrl, setSongUrl] = useState(null);
+
+  const [currentTime, setCurrentTime] = useState(0);
 
   const togglePlayerDialog = (open) => {
     setPlayerDialog(open);
   };
 
-  const { loading, runAsync, refreshAsync } = useRequest(
-    () => getSongUrl(songs[current].id),
-    { manual: true }
-  );
+  const { runAsync: runGetSongUrl, refreshAsync: refreshGetSongUrl } =
+    useRequest(() => getSongUrl(songs[current].id), { manual: true });
+
+  const { runAsync: runGetSongLyric, refreshAsync: refreshGetSongLyric } =
+    useRequest(() => getSongLyric(songs[current].id), { manual: true });
 
   useEffect(async () => {
-    const { data } = await runAsync();
-    setSongUrl(data[0]?.url);
+    pubsub.subscribe("CURRENT_TIME", (msg, data) => {
+      // console.log(msg, data);
+      setCurrentTime(data);
+    });
+    const { data: songUrl } = await runGetSongUrl();
+    const { lrc } = await runGetSongLyric();
+    console.log(lyric);
+    if (songUrl[0].url && lrc) {
+      updateSetting({ src: songUrl[0]?.url, lyric: lrc.lyric });
+    } else {
+      changeSong(current + 1);
+    }
   }, []);
 
   useEffect(async () => {
-    const { data } = await refreshAsync();
-    if (data[0].url) {
-      setSongUrl(data[0]?.url);
-      updateSetting({ src: data[0]?.url });
+    const { data: songUrl } = await refreshGetSongUrl();
+    const { lrc } = await refreshGetSongLyric();
+    if (songUrl[0].url && lrc) {
+      updateSetting({ src: songUrl[0]?.url, lyric: lrc.lyric });
     } else {
       changeSong(current + 1);
     }
@@ -65,7 +78,6 @@ const PlayerDialog = ({ songs, current, src, updateSetting }) => {
     } else {
       updateSetting({ current: index });
     }
-    // console.log(songs[current]);
   };
 
   const fabStyle = {
@@ -84,7 +96,7 @@ const PlayerDialog = ({ songs, current, src, updateSetting }) => {
       >
         <Icon>headphones</Icon>
         {md ? (
-          <Typography variant="body2" sx={{ml:1}}>
+          <Typography variant="body2" sx={{ ml: 1 }}>
             {`正在播放：${songs[current].name.substr(0, 8)}...`}
           </Typography>
         ) : null}
@@ -102,7 +114,7 @@ const PlayerDialog = ({ songs, current, src, updateSetting }) => {
             width: "100%",
             height: "100%",
             background: `url(${songs[current]?.al.picUrl})`,
-            filter: "blur(25px)",
+            filter: "blur(60px) brightness(60%)",
           }}
         />
         <AppBar sx={{ backgroundColor: "transparent", boxShadow: 0 }}>
@@ -141,7 +153,7 @@ const PlayerDialog = ({ songs, current, src, updateSetting }) => {
                 item
                 sx={{ display: { xs: "none", sm: "block" } }}
               >
-                <Lyric />
+                <Lyric lrc={lyric} currentTime={currentTime} />
               </Grid>
             </Grid>
           </DialogContent>
@@ -155,12 +167,13 @@ export default connect(
   ({
     player: {
       songs,
-      setting: { current, src },
+      setting: { current, src, lyric },
     },
   }) => ({
     songs,
     current,
     src,
+    lyric,
   }),
   {
     updateSetting,
