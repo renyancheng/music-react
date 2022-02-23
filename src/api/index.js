@@ -9,6 +9,7 @@ export const urls = {
   getSongDetail: "/song/detail",
   getSongUrl: "/song/url",
   getSongLyric: "/lyric",
+  getUserPlaylist: "/user/playlist",
 };
 
 // 手机号登录
@@ -44,4 +45,9 @@ export function getSongUrl(id) {
 // 获取音乐Lyric
 export function getSongLyric(id) {
   return get(urls.getSongLyric, { id });
+}
+
+// 获取用户歌单列表
+export function getUserPlaylist(uid, limit = 30, offset = 0) {
+  return get(urls.getUserPlaylist, { uid, limit, offset });
 }

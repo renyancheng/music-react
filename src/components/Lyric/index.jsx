@@ -36,10 +36,13 @@ const Lyric = ({ lrc, currentTime }) => {
   const lineRenderer = useCallback(
     ({ lrcLine: { millisecond, content }, index, active }) => (
       <Typography
-        variant={active ? "h6" : "subtitle1"}
+        variant={active ? "h5" : "subtitle1"}
         component="div"
         align="center"
-        sx={{ color: active ? "secondary.main" : "inherit" }}
+        // sx={{ color: active ? "inherit" : "inherit" }}
+        sx={{
+          opacity: active ? 1 : 0.5
+        }}
       >
         {content}
       </Typography>

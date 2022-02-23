@@ -19,7 +19,7 @@ const PlaylistList = ({ playlistList }) => {
       <Grid spacing={2} container>
         {playlistList?.map((playlist) => {
           return (
-            <Grid xs={6} sm={3} md={3} lg={2.4} key={playlist.id} item>
+            <Grid xs={6} sm={3} md={2.4} lg={2} key={playlist.id} item>
               <Card>
                 <CardActionArea
                   onClick={() => {
@@ -32,8 +32,8 @@ const PlaylistList = ({ playlistList }) => {
                     image={playlist?.picUrl || playlist?.coverImgUrl}
                   />
                   <CardContent>
-                    <Typography variant="subtitle1">{playlist.name}</Typography>
-                    <Box sx={{ display: { xs: "none", sm: "block" } }}>
+                    <Typography variant="body1">{playlist.name}</Typography>
+                    {/* <Box sx={{ display: { xs: "none", sm: "block" } }}>
                       <Chip
                         color="primary"
                         size="small"
@@ -51,10 +51,10 @@ const PlaylistList = ({ playlistList }) => {
                           playlist.subscribedCount || playlist.trackCount
                         ).format("0a")}收藏`}
                       />
-                    </Box>
+                    </Box> */}
 
                     <Typography
-                      variant="subtitle2"
+                      variant="body2"
                       color="text.secondary"
                       sx={{ display: { xs: "none", sm: "block" } }}
                     >

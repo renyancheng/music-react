@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import {
   Box,
@@ -111,6 +112,25 @@ export const PlaylistDetail = ({ detail, profile, playAll }) => {
                 </Stack>
               </Grid>
               <Grid item sx={{ m: 1 }}>
+                {detail.creator && (
+                  <Description
+                    name="创建者"
+                    value={
+                      <Chip
+                        avatar={
+                          <Avatar
+                            alt={detail.creator.nickname}
+                            src={detail.creator.avatarUrl}
+                          />
+                        }
+                        label={detail.creator.nickname}
+                        variant="outlined"
+                        component={Link}
+                        to={`/user/home/${detail.creator.userId}`}
+                      />
+                    }
+                  />
+                )}
                 <Box sx={{ my: 2 }}>
                   <Typography
                     variant="body2"
@@ -135,7 +155,10 @@ export const PlaylistDetail = ({ detail, profile, playAll }) => {
                   </Typography>
                 </Box>
 
-                <Description name="个性签名" value={detail.description} />
+                <Description
+                  name="个性签名"
+                  value={detail.description || "这家伙很懒什么也没有写"}
+                />
                 <Description
                   name="收藏数量"
                   value={`${numeral(detail.trackCount).format("0a")}`}

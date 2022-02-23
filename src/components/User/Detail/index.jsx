@@ -64,17 +64,23 @@ export const UserDetail = ({ detail, profile }) => {
               <Grid xs={12} sm={12} md={12} lg={12} item sx={{ m: 1 }}>
                 <Stack direction="row" spacing={3}>
                   <Stack sx={{ display: "flex", alignItems: "center" }}>
-                    <Typography variant="subtitle1">1</Typography>
+                    <Typography variant="subtitle1">
+                      {detail.profile.eventCount}
+                    </Typography>
                     <Typography variant="body1">动态</Typography>
                   </Stack>
                   <Divider orientation="vertical" variant="middle" flexItem />
                   <Stack sx={{ display: "flex", alignItems: "center" }}>
-                    <Typography variant="subtitle1">1</Typography>
+                    <Typography variant="subtitle1">
+                      {detail.profile.follows}
+                    </Typography>
                     <Typography variant="body1">关注</Typography>
                   </Stack>
                   <Divider orientation="vertical" variant="middle" flexItem />
                   <Stack sx={{ display: "flex", alignItems: "center" }}>
-                    <Typography variant="subtitle1">1</Typography>
+                    <Typography variant="subtitle1">
+                      {detail.profile.followeds}
+                    </Typography>
                     <Typography variant="body1">粉丝</Typography>
                   </Stack>
                 </Stack>
@@ -108,7 +114,10 @@ export const UserDetail = ({ detail, profile }) => {
                 </Stack>
               </Grid>
               <Grid item sx={{ m: 1 }}>
-                <Description name="个性签名" value={detail.profile.signature} />
+                <Description
+                  name="个性签名"
+                  value={detail.profile.signature || "这家伙很懒什么也没有写"}
+                />
                 <Description
                   name="累计听歌"
                   value={`${detail.listenSongs}首`}
