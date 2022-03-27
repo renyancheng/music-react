@@ -19,9 +19,24 @@ const AudioPlayer = ({ src, currentSong, changeSong, current }) => {
     src,
     format: "mp3",
     autoplay: true,
+    preload: true,
+    // html5: true,
     pool: 1,
-    // onload: () => console.log("加载中。。。"),
-    // onloaderror: () => console.log("加载失败"),
+    onload: () => console.log("加载了"),
+    onplayerror: (_, err) => {
+      console.log("播放失败:", err);
+    },
+    onloaderror: (_, err) => {
+      console.log("加载失败:", err);
+      changeSong(current + 1);
+    },
+    /* xhr: {
+      method: "POST",
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+      },
+      withCredentials: true,
+    }, */
     // onplay: () => console.log("播放开始"),
     onend: () => changeSong(current + 1),
   });
@@ -46,7 +61,11 @@ const AudioPlayer = ({ src, currentSong, changeSong, current }) => {
 
   return (
     <>
-      <Stack direction="column" spacing={1.2} sx={{ width: 250 }}>
+      <Stack
+        direction="column"
+        spacing={1.2}
+        sx={{ width: 250, /* position: "absolute", top: 50 */ }}
+      >
         <Avatar
           src={currentSong.al.picUrl}
           sx={{

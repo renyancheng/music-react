@@ -18,8 +18,12 @@ import {
   Stack,
   Slider,
   Box,
-  getBottomNavigationUtilityClass,
+  Tab,
+  Tabs,
 } from "@mui/material";
+import TabContext from "@mui/lab/TabContext";
+import TabList from "@mui/lab/TabList";
+import TabPanel from "@mui/lab/TabPanel";
 import pubsub from "pubsub-js";
 import { useRequest, useResponsive } from "ahooks";
 import { updateSetting } from "../../redux/actions/player";
@@ -29,6 +33,12 @@ import Lyric from "../../components/Lyric";
 
 const PlayerDialog = ({ songs, current, src, updateSetting, lyric }) => {
   const { md } = useResponsive();
+
+  const [value, setValue] = React.useState("player");
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
   const [playerDialog, setPlayerDialog] = useState(false);
 
@@ -103,6 +113,7 @@ const PlayerDialog = ({ songs, current, src, updateSetting, lyric }) => {
       </Fab>
       <Dialog
         fullScreen
+        scroll="paper"
         keepMounted
         open={playerDialog}
         onClose={() => togglePlayerDialog(false)}
@@ -115,32 +126,94 @@ const PlayerDialog = ({ songs, current, src, updateSetting, lyric }) => {
             height: "100%",
             background: `url(${songs[current]?.al.picUrl})`,
             filter: "blur(60px) brightness(60%)",
+            height: 1000,
           }}
         />
         <AppBar sx={{ backgroundColor: "transparent", boxShadow: 0 }}>
           <DialogContent sx={{ p: 0, m: 0 }}>
-            <Toolbar sx={{ position: "relative" }}>
-              <Typography
-                sx={{ ml: 2, flex: 1 }}
-                variant="h6"
-                component="div"
-              ></Typography>
-              <IconButton
-                color="inherit"
-                onClick={() => togglePlayerDialog(false)}
-              >
-                <Icon>close</Icon>
-              </IconButton>
-            </Toolbar>
-            <Grid
+            <TabContext value={value}>
+              <Toolbar sx={{}}>
+                <Box
+                  sx={{
+                    width: "100%",
+                  }}
+                >
+                  <TabList
+                    onChange={handleChange}
+                    // variant="fullWidth"
+                    textColor="inherit"
+                    indicatorColor="inherit"
+                    centered
+                  >
+                    <Tab label="播放器" value="player" />
+                    <Tab label="歌词" value="lyric" />
+                  </TabList>
+                </Box>
+
+                <IconButton
+                  color="inherit"
+                  onClick={() => togglePlayerDialog(false)}
+                >
+                  <Icon>close</Icon>
+                </IconButton>
+              </Toolbar>
+              <Box>
+                {/* <TabList onChange={handleChange} centered>
+                  <Tab label="播放器" value="player" />
+                  <Tab label="歌词" value="lyric" />
+                </TabList> */}
+              </Box>
+              <TabPanel value="player">
+                <Grid
+                  container
+                  direction="row"
+                  justifyContent="center"
+                  alignItems="center"
+                  // sx={{ position: "absolute" }}
+                >
+                  <Grid item>
+                    <AudioPlayer
+                      // src={`https://music.163.com/song/media/outer/url?id=${songs[current].id}.mp3`}
+                      src={src}
+                      currentSong={songs[current]}
+                      changeSong={changeSong}
+                      current={current}
+                    />
+                  </Grid>
+                </Grid>
+              </TabPanel>
+              <TabPanel value="lyric">
+                <Grid
+                  container
+                  direction="row"
+                  justifyContent="center"
+                  alignItems="center"
+                  // sx={{ position: "absolute" }}
+                >
+                  <Grid item>
+                    <Lyric lrc={lyric} currentTime={currentTime} />
+                  </Grid>
+                </Grid>
+              </TabPanel>
+            </TabContext>
+            {/* <Grid
               container
               direction="row"
               justifyContent="center"
               alignItems="center"
-              sx={{ position: "absolute" }}
+              // sx={{ position: "absolute" }}
             >
-              <Grid xs={12} sm={6} item container justifyContent="center">
+              <Grid
+                xs={12}
+                sm={6}
+                // sx={{display:{ xs: "none", sm: "flex" } }}
+                item
+                container
+                justifyContent="center"
+                alignItems="center"
+              >
                 <AudioPlayer
+                  // src={`https://music.163.com/song/media/outer/url?id=${songs[current].id}.mp3`}
                   src={src}
                   currentSong={songs[current]}
                   changeSong={changeSong}
@@ -148,14 +221,16 @@ const PlayerDialog = ({ songs, current, src, updateSetting, lyric }) => {
                 />
               </Grid>
               <Grid
-                xs={12}
+                xs={8}
                 sm={6}
                 item
-                sx={{ display: { xs: "none", sm: "block" } }}
+                container
+                justifyContent="center"
+                // sx={{ display: { xs: "none", sm: "flex" } }}
               >
                 <Lyric lrc={lyric} currentTime={currentTime} />
               </Grid>
-            </Grid>
+            </Grid> */}
           </DialogContent>
         </AppBar>
       </Dialog>

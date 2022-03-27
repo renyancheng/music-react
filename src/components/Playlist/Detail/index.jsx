@@ -156,7 +156,7 @@ export const PlaylistDetail = ({ detail, profile, playAll }) => {
                 </Box>
 
                 <Description
-                  name="个性签名"
+                  name="歌单简介"
                   value={detail.description || "这家伙很懒什么也没有写"}
                 />
                 <Description

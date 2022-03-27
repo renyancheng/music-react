@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Skeleton, Grid, Card, CardContent } from "@mui/material";
+import { Skeleton, Grid, Card, CardContent, Divider } from "@mui/material";
 import { useRequest } from "ahooks";
 import { getUserDetail, getUserPlaylist } from "../../api";
 import UserDetail from "../../components/User/Detail";
@@ -77,6 +77,7 @@ const User = () => {
               <UserDetail detail={user} />
               <Title title={`${user.profile.nickname}创建的歌单`} />
               <PlaylistList playlistList={userPlaylist} />
+              <Divider sx={{ my: 5 }} />
               <Title title={`${user.profile.nickname}收藏的歌单`} />
               <PlaylistList playlistList={otherPlaylist} />
             </>
