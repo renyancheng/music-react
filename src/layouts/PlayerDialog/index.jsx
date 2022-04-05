@@ -13,17 +13,8 @@ import {
   Button,
   Paper,
   Grid,
-  Avatar,
-  Container,
-  Stack,
-  Slider,
   Box,
-  Tab,
-  Tabs,
 } from "@mui/material";
-import TabContext from "@mui/lab/TabContext";
-import TabList from "@mui/lab/TabList";
-import TabPanel from "@mui/lab/TabPanel";
 import pubsub from "pubsub-js";
 import { useRequest, useResponsive } from "ahooks";
 import { updateSetting } from "../../redux/actions/player";
@@ -31,14 +22,8 @@ import { getSongUrl, getSongLyric } from "../../api";
 import AudioPlayer from "../../components/AudioPlayer";
 import Lyric from "../../components/Lyric";
 
-const PlayerDialog = ({ songs, current, src, updateSetting, lyric }) => {
+const PlayerDialog = ({ songs, current, src, updateSetting, lyric, mode }) => {
   const { md } = useResponsive();
-
-  const [value, setValue] = React.useState("player");
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
 
   const [playerDialog, setPlayerDialog] = useState(false);
 
@@ -77,7 +62,7 @@ const PlayerDialog = ({ songs, current, src, updateSetting, lyric }) => {
     } else {
       changeSong(current + 1);
     }
-  }, [current]);
+  }, [songs, current]);
 
   const changeSong = (index) => {
     const songsCount = songs.length - 1;
@@ -88,6 +73,22 @@ const PlayerDialog = ({ songs, current, src, updateSetting, lyric }) => {
     } else {
       updateSetting({ current: index });
     }
+  };
+
+  const toggleMode = () => {
+    let newMode;
+    switch (mode) {
+      case "order":
+        newMode = "random";
+        break;
+      case "random":
+        newMode = "repeat";
+        break;
+      case "repeat":
+        newMode = "order";
+        break;
+    }
+    updateSetting({ mode: newMode });
   };
 
   const fabStyle = {
@@ -123,7 +124,7 @@ const PlayerDialog = ({ songs, current, src, updateSetting, lyric }) => {
         <Paper
           sx={{
             width: "100%",
-            height: "100%",
+            // height: "100%",
             background: `url(${songs[current]?.al.picUrl})`,
             filter: "blur(60px) brightness(60%)",
             height: 1000,
@@ -131,72 +132,21 @@ const PlayerDialog = ({ songs, current, src, updateSetting, lyric }) => {
         />
         <AppBar sx={{ backgroundColor: "transparent", boxShadow: 0 }}>
           <DialogContent sx={{ p: 0, m: 0 }}>
-            <TabContext value={value}>
-              <Toolbar sx={{}}>
-                <Box
-                  sx={{
-                    width: "100%",
-                  }}
-                >
-                  <TabList
-                    onChange={handleChange}
-                    // variant="fullWidth"
-                    textColor="inherit"
-                    indicatorColor="inherit"
-                    centered
-                  >
-                    <Tab label="播放器" value="player" />
-                    <Tab label="歌词" value="lyric" />
-                  </TabList>
-                </Box>
+            <Toolbar sx={{}}>
+              <Box
+                sx={{
+                  width: "100%",
+                }}
+              ></Box>
 
-                <IconButton
-                  color="inherit"
-                  onClick={() => togglePlayerDialog(false)}
-                >
-                  <Icon>close</Icon>
-                </IconButton>
-              </Toolbar>
-              <Box>
-                {/* <TabList onChange={handleChange} centered>
-                  <Tab label="播放器" value="player" />
-                  <Tab label="歌词" value="lyric" />
-                </TabList> */}
-              </Box>
-              <TabPanel value="player">
-                <Grid
-                  container
-                  direction="row"
-                  justifyContent="center"
-                  alignItems="center"
-                  // sx={{ position: "absolute" }}
-                >
-                  <Grid item>
-                    <AudioPlayer
-                      // src={`https://music.163.com/song/media/outer/url?id=${songs[current].id}.mp3`}
-                      src={src}
-                      currentSong={songs[current]}
-                      changeSong={changeSong}
-                      current={current}
-                    />
-                  </Grid>
-                </Grid>
-              </TabPanel>
-              <TabPanel value="lyric">
-                <Grid
-                  container
-                  direction="row"
-                  justifyContent="center"
-                  alignItems="center"
-                  // sx={{ position: "absolute" }}
-                >
-                  <Grid item>
-                    <Lyric lrc={lyric} currentTime={currentTime} />
-                  </Grid>
-                </Grid>
-              </TabPanel>
-            </TabContext>
-            {/* <Grid
+              <IconButton
+                color="inherit"
+                onClick={() => togglePlayerDialog(false)}
+              >
+                <Icon>close</Icon>
+              </IconButton>
+            </Toolbar>
+            <Grid
               container
               direction="row"
               justifyContent="center"
@@ -218,19 +168,22 @@ const PlayerDialog = ({ songs, current, src, updateSetting, lyric }) => {
                   currentSong={songs[current]}
                   changeSong={changeSong}
                   current={current}
+                  songs={songs}
+                  mode={mode}
+                  toggleMode={toggleMode}
                 />
               </Grid>
               <Grid
-                xs={8}
+                xs={12}
                 sm={6}
                 item
                 container
                 justifyContent="center"
-                // sx={{ display: { xs: "none", sm: "flex" } }}
+                sx={{ display: { xs: "none", sm: "flex" } }}
               >
                 <Lyric lrc={lyric} currentTime={currentTime} />
               </Grid>
-            </Grid> */}
+            </Grid>
           </DialogContent>
         </AppBar>
       </Dialog>
@@ -242,13 +195,14 @@ export default connect(
   ({
     player: {
       songs,
-      setting: { current, src, lyric },
+      setting: { current, src, lyric, mode },
     },
   }) => ({
     songs,
     current,
     src,
     lyric,
+    mode,
   }),
   {
     updateSetting,

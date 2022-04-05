@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { connect } from "react-redux";
-import { Skeleton, Box } from "@mui/material";
+import { Skeleton, Box, CardContent, Card } from "@mui/material";
 import { useRequest } from "ahooks";
 import { useSnackbar } from "notistack";
 import { getPlaylistDetail, getSongDetail } from "../../api";
@@ -69,7 +69,11 @@ const Playlist = ({ addSongs }) => {
                 />
               </Box>
               <Box>
-                <SongList songList={songList} />
+                <Card>
+                  <CardContent>
+                    <SongList songList={songList} />
+                  </CardContent>
+                </Card>
               </Box>
             </>
           )}

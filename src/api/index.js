@@ -1,5 +1,4 @@
-import { Fragment } from "react";
-import { get, post } from "./request";
+import { get } from "./request";
 
 export const urls = {
   loginByPhone: "/login/cellphone",
@@ -10,6 +9,10 @@ export const urls = {
   getSongUrl: "/song/url",
   getSongLyric: "/lyric",
   getUserPlaylist: "/user/playlist",
+  getRecommendSongs: "/recommend/songs",
+  getRecommendPlaylist: "/recommend/resource",
+  getSearchSuggest: "/search/suggest",
+  getSearchResult: "/cloudsearch",
 };
 
 // 手机号登录
@@ -50,4 +53,24 @@ export function getSongLyric(id) {
 // 获取用户歌单列表
 export function getUserPlaylist(uid, limit = 30, offset = 0) {
   return get(urls.getUserPlaylist, { uid, limit, offset });
+}
+
+// 获取用户推荐歌曲
+export function getRecommendSongs() {
+  return get(urls.getRecommendSongs, {});
+}
+
+// 获取用户推荐歌单
+export function getRecommendPlaylist() {
+  return get(urls.getRecommendPlaylist, {});
+}
+
+// 获取搜索建议
+export function getSearchSuggest(keywords) {
+  return get(urls.getSearchSuggest, { keywords, type: "mobile" });
+}
+
+// 获取搜索结果
+export function getSearchResult(keywords) {
+  return get(urls.getSearchResult, { keywords });
 }

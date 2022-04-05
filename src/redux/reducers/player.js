@@ -14,7 +14,7 @@ const initState = {
     src: null,
     lyric: null,
     volume: 1,
-    mode: "order", // random, once
+    mode: "order", // random, repeat
   },
 };
 
@@ -28,7 +28,12 @@ export default function player(preState = initState, { type, data }) {
         set("setting", setting);
         return { songs, setting };
       } else {
-        const songs = [...data.songs, ...preState.songs];
+        let songs = [...preState.songs, ...data.songs]; // 所有歌曲播放列表
+        // 遍历要添加的每个歌曲，过滤掉列表中相同的音乐
+        data.songs.forEach((newSong) => {
+          songs = songs.filter((song) => song.id !== newSong.id);
+        });
+        songs = [...songs, ...data.songs];
         set("songs", songs);
         return { ...preState, songs };
       }

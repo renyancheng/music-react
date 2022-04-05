@@ -7,39 +7,66 @@ import {
   Icon,
   IconButton,
   Slider,
+  Dialog,
+  DialogTitle,
+  DialogContent
 } from "@mui/material";
+import SongList from "../../components/SongList";
+import { useToggle } from "ahooks";
 import pubsub from "pubsub-js";
 
 const formatTime = (second) =>
   new Date(second * 1000).toISOString().substr(15, 4);
 
-const AudioPlayer = ({ src, currentSong, changeSong, current }) => {
+const AudioPlayer = ({
+  src,
+  songs,
+  currentSong,
+  changeSong,
+  current,
+  mode,
+  toggleMode,
+}) => {
   const [progress, setProgress] = useState(0);
-  const { togglePlayPause, ready, loading, playing } = useAudioPlayer({
-    src,
-    format: "mp3",
-    autoplay: true,
-    preload: true,
-    // html5: true,
-    pool: 1,
-    onload: () => console.log("加载了"),
-    onplayerror: (_, err) => {
-      console.log("播放失败:", err);
-    },
-    onloaderror: (_, err) => {
-      console.log("加载失败:", err);
-      changeSong(current + 1);
-    },
-    /* xhr: {
+  const [playlistDialog, setPlaylistDialog] = useState(false);
+  const { togglePlayPause, play, ready, loading, playing, volume } =
+    useAudioPlayer({
+      src,
+      format: "mp3",
+      autoplay: true,
+      preload: true,
+      html5: true,
+      pool: 1,
+      // onload: () => console.log("加载了"),
+      onplayerror: (_, err) => {
+        console.log("播放失败:", err);
+      },
+      onloaderror: (_, err) => {
+        console.log("加载失败:", err);
+        changeSong(current + 1);
+      },
+      /* xhr: {
       method: "POST",
       headers: {
         "Access-Control-Allow-Origin": "*",
       },
       withCredentials: true,
     }, */
-    // onplay: () => console.log("播放开始"),
-    onend: () => changeSong(current + 1),
-  });
+      // onplay: () => console.log("播放开始"),
+      onend: () => {
+        switch (mode) {
+          case "repeat":
+            play();
+            break;
+          case "random":
+            changeSong(parseInt(Math.random() * songs.length - 1));
+            break;
+          default:
+            changeSong(current + 1);
+            break;
+        }
+      },
+    });
 
   const { percentComplete, duration, seek, position } = useAudioPosition({
     highRefreshRate: true,
@@ -64,7 +91,7 @@ const AudioPlayer = ({ src, currentSong, changeSong, current }) => {
       <Stack
         direction="column"
         spacing={1.2}
-        sx={{ width: 250, /* position: "absolute", top: 50 */ }}
+        sx={{ width: 250 /* position: "absolute", top: 50 */ }}
       >
         <Avatar
           src={currentSong.al.picUrl}
@@ -91,6 +118,9 @@ const AudioPlayer = ({ src, currentSong, changeSong, current }) => {
           justifyContent="center"
           alignItems="center"
         >
+          <IconButton color="inherit" onClick={() => setPlaylistDialog(true)}>
+            <Icon>queue_music</Icon>
+          </IconButton>
           <IconButton color="inherit" onClick={() => changeSong(current - 1)}>
             <Icon>skip_previous</Icon>
           </IconButton>
@@ -104,6 +134,11 @@ const AudioPlayer = ({ src, currentSong, changeSong, current }) => {
           </IconButton>
           <IconButton color="inherit" onClick={() => changeSong(current + 1)}>
             <Icon>skip_next</Icon>
+          </IconButton>
+          <IconButton color="inherit" onClick={() => toggleMode()}>
+            {mode === "random" && <Icon>shuffle</Icon>}
+            {mode === "repeat" && <Icon>repeat_one_outlined</Icon>}
+            {mode === "order" && <Icon>sync_alt</Icon>}
           </IconButton>
         </Stack>
         <Stack spacing={2} direction="row" alignItems="center">
@@ -122,6 +157,16 @@ const AudioPlayer = ({ src, currentSong, changeSong, current }) => {
           </Typography>
         </Stack>
       </Stack>
+      <Dialog
+        onClose={() => setPlaylistDialog(false)}
+        open={playlistDialog}
+        scroll="paper"
+      >
+        <DialogTitle>播放列表</DialogTitle>
+        <DialogContent dividers>
+          <SongList songList={songs} />
+        </DialogContent>
+      </Dialog>
     </>
   );
 };

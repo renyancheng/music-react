@@ -56,6 +56,11 @@ export const Header = ({ isLogin, profile, userLogout }) => {
       href: "/discover/djradio",
       icon: "adjust",
     },
+    {
+      name: "搜索",
+      href: "/search",
+      icon: "search",
+    },
   ];
 
   /* const [nav, setNav] = React.useState(0);
@@ -142,9 +147,9 @@ export const Header = ({ isLogin, profile, userLogout }) => {
               sx={{
                 display: { sm: "flex", md: "none" },
               }}
-              variant="h6"
+              variant="h5"
             >
-              Music
+              网抑云音乐
             </Typography>
           </Box>
           <Box
@@ -193,7 +198,7 @@ export const Header = ({ isLogin, profile, userLogout }) => {
                     <MenuItem
                       onClick={() => {
                         popupState.close();
-                        navigate(`/user/home/${profile.userId}`)
+                        navigate(`/user/home/${profile.userId}`);
                       }}
                     >
                       <ListItemIcon>

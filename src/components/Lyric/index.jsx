@@ -1,33 +1,3 @@
-/* import React from "react";
-import { Box, Stack, Typography } from "@mui/material";
-
-const Lyric = () => {
-  return (
-    <>
-      <Box
-        sx={{
-          display: "flex",
-          height: "80vh",
-          overflowY: "scroll",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <Stack direction="column" spacing={1}>
-          <Typography variant="h6" component="div">
-            歌词
-          </Typography>
-          <Typography variant="h6" component="div">
-            歌词
-          </Typography>
-        </Stack>
-      </Box>
-    </>
-  );
-};
-
-export default Lyric;
- */
 import React, { useCallback } from "react";
 import { Box, Stack, Typography } from "@mui/material";
 import { Lrc } from "@mebtte/react-lrc";
@@ -42,6 +12,7 @@ const Lyric = ({ lrc, currentTime }) => {
         // sx={{ color: active ? "inherit" : "inherit" }}
         sx={{
           opacity: active ? 1 : 0.5,
+          mb: 1,
         }}
       >
         {content}
