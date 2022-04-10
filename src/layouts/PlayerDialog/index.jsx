@@ -128,6 +128,7 @@ const PlayerDialog = ({ songs, current, src, updateSetting, lyric, mode }) => {
             background: `url(${songs[current]?.al.picUrl})`,
             filter: "blur(60px) brightness(60%)",
             height: 1000,
+            transition: "background 0.5s ease 0.5s"
           }}
         />
         <AppBar sx={{ backgroundColor: "transparent", boxShadow: 0 }}>
