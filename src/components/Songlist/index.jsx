@@ -43,7 +43,21 @@ const SongList = ({ songList, songs, current, updateSetting, addSongs }) => {
                 <Avatar alt={song.name} src={song.al.picUrl} />
               </ListItemAvatar> */}
               <ListItemText
-                primary={song.name}
+                primary={
+                  <>
+                    <Typography
+                      component="span"
+                      color={
+                        song.id !== songs[current].id
+                          ? "text.primary"
+                          : "primary"
+                      }
+                    >
+                      {song.id === songs[current].id ? "正在播放：" : null}
+                      {song.name}
+                    </Typography>
+                  </>
+                }
                 secondary={
                   <>
                     <Typography
