@@ -1,13 +1,4 @@
 {
   "name": "music-react",
-  "version": 2,
-  "routes": [
-    {
-      "src": "/",
-      "headers": {
-        "cache-control": "no-cache, no-store, must-revalidate",
-        "Access-Control-Allow-Origin": "*"
-      }
-    }
-  ]
+  "version": 2
 }

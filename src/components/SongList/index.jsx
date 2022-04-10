@@ -36,7 +36,7 @@ const SongList = ({ songList, songs, current, updateSetting, addSongs }) => {
               alignItems="flex-start"
               key={song.id}
               sx={{ borderRadius: 2 }}
-              disabled={song.noCopyrightRcmd}
+              disabled={Boolean(song.noCopyrightRcmd)}
               onClick={() => addOneSong(song)}
             >
               {/* <ListItemAvatar>
