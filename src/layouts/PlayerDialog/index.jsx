@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import {
   Icon,
   Fab,
-  Zoom,
+  Fade,
   Dialog,
   DialogContent,
   AppBar,
@@ -118,7 +118,7 @@ const PlayerDialog = ({ songs, current, src, updateSetting, lyric, mode }) => {
         keepMounted
         open={playerDialog}
         onClose={() => togglePlayerDialog(false)}
-        TransitionComponent={Zoom}
+        TransitionComponent={Fade}
         sx={{ overflowY: "hidden" }}
       >
         <Paper

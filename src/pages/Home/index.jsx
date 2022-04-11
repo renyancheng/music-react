@@ -24,34 +24,36 @@ import Title from "../../components/Title";
 
 export const Home = ({ isLogin }) => {
   const { data: playlistList, loading: loadingPlaylistList } = useRequest(
-    () => (isLogin ? getRecommendPlaylist() : getPersonalizedPlaylist(10)),
+    () => (isLogin ? getRecommendPlaylist() : getPersonalizedPlaylist(24)),
     { refreshDeps: [isLogin] }
   );
 
-  const { data: recommendSongs, loading: loadingRecommendSongs } =
-    useRequest(getRecommendSongs);
+  const { data: recommendSongs, loading: loadingRecommendSongs } = useRequest(
+    getRecommendSongs,
+    { refreshDeps: [isLogin] }
+  );
 
   return (
     <>
-      {loadingPlaylistList && loadingRecommendSongs ? (
+      {isLogin && (
         <>
-          <Grid container>
-            <Grid xs={6} sm={3} md={3} lg={2.4} item>
+          <Title title="每日推荐" />
+          {!recommendSongs ? (
+            <>
               <Card>
                 <Skeleton variant="rectangular" height={150} />
                 <CardContent>
-                  <Skeleton variant="text" />
-                  <Skeleton variant="text" width="50%" />
+                  <Skeleton variant="text" sx={{ width: "20%" }} />
+                  <Skeleton
+                    sx={{ height: 50 }}
+                    animation="wave"
+                    variant="rectangular"
+                  />
                 </CardContent>
               </Card>
-            </Grid>
-          </Grid>
-        </>
-      ) : (
-        <>
-          {isLogin && (
+            </>
+          ) : (
             <>
-              <Title title="每日推荐" />
               <Card>
                 <CardMedia
                   component="img"
@@ -80,14 +82,13 @@ export const Home = ({ isLogin }) => {
               </Card>
             </>
           )}
-          <Title title="推荐歌单" />
-          <PlaylistList
-            playlistList={
-              isLogin ? playlistList?.recommend : playlistList?.result
-            }
-          />
         </>
       )}
+
+      <Title title="推荐歌单" />
+      <PlaylistList
+        playlistList={isLogin ? playlistList?.recommend : playlistList?.result}
+      />
     </>
   );
 };

@@ -7,6 +7,7 @@ import {
   CardActionArea,
   Typography,
   Grid,
+  Skeleton,
   Chip,
   Box,
 } from "@mui/material";
@@ -16,24 +17,25 @@ const PlaylistList = ({ playlistList }) => {
   const navigate = useNavigate();
   return (
     <>
-      <Grid spacing={2} container>
-        {playlistList?.map((playlist) => {
-          return (
-            <Grid xs={6} sm={3} md={2.4} lg={2} key={playlist.id} item>
-              <Card>
-                <CardActionArea
-                  onClick={() => {
-                    navigate(`/playlist/${playlist.id}`);
-                  }}
-                >
-                  <CardMedia
-                    component="img"
-                    alt="green iguana"
-                    image={playlist?.picUrl || playlist?.coverImgUrl}
-                  />
-                  <CardContent>
-                    <Typography variant="body1">{playlist.name}</Typography>
-                    {/* <Box sx={{ display: { xs: "none", sm: "block" } }}>
+      {playlistList ? (
+        <Grid spacing={2} container>
+          {playlistList?.map((playlist) => {
+            return (
+              <Grid xs={6} sm={3} md={2.4} lg={2} key={playlist.id} item>
+                <Card>
+                  <CardActionArea
+                    onClick={() => {
+                      navigate(`/playlist/${playlist.id}`);
+                    }}
+                  >
+                    <CardMedia
+                      component="img"
+                      alt="green iguana"
+                      image={playlist?.picUrl || playlist?.coverImgUrl}
+                    />
+                    <CardContent>
+                      <Typography variant="body1">{playlist.name}</Typography>
+                      {/* <Box sx={{ display: { xs: "none", sm: "block" } }}>
                       <Chip
                         color="primary"
                         size="small"
@@ -53,20 +55,35 @@ const PlaylistList = ({ playlistList }) => {
                       />
                     </Box> */}
 
-                    <Typography
-                      variant="body2"
-                      color="text.secondary"
-                      sx={{ display: { xs: "none", sm: "block" } }}
-                    >
-                      {playlist.copywriter}
-                    </Typography>
-                  </CardContent>
-                </CardActionArea>
+                      <Typography
+                        variant="body2"
+                        color="text.secondary"
+                        sx={{ display: { xs: "none", sm: "block" } }}
+                      >
+                        {playlist.copywriter}
+                      </Typography>
+                    </CardContent>
+                  </CardActionArea>
+                </Card>
+              </Grid>
+            );
+          })}
+        </Grid>
+      ) : (
+        <>
+          <Grid container>
+            <Grid xs={6} sm={3} md={3} lg={2.4} item>
+              <Card>
+                <Skeleton variant="rectangular" height={150} />
+                <CardContent>
+                  <Skeleton variant="text" />
+                  <Skeleton variant="text" width="50%" />
+                </CardContent>
               </Card>
             </Grid>
-          );
-        })}
-      </Grid>
+          </Grid>
+        </>
+      )}
     </>
   );
 };

@@ -42,48 +42,14 @@ const User = () => {
   }, [playlists]);
   return (
     <>
-      {loadingUser && loadingPlaylists && !userPlaylist && !otherPlaylist ? (
-        <>
-          <Grid container spacing={6}>
-            <Grid xs={12} item>
-              <Skeleton variant="rectangular" height={250} />
-            </Grid>
-            <Grid xs={6} sm={3} md={3} lg={2.4} item>
-              <Card>
-                <Skeleton variant="rectangular" height={150} />
-                <CardContent>
-                  <Skeleton variant="text" />
-                  <Skeleton variant="text" width="50%" />
-                </CardContent>
-              </Card>
-            </Grid>
-            <Grid xs={6} sm={3} md={3} lg={2.4} item>
-              <Card>
-                <Skeleton variant="rectangular" height={150} />
-                <CardContent>
-                  <Skeleton variant="text" />
-                  <Skeleton variant="text" width="50%" />
-                </CardContent>
-              </Card>
-            </Grid>
-          </Grid>
-        </>
-      ) : (
-        <>
-          {user?.code !== 200 ? (
-            <Error errorCode={404} />
-          ) : (
-            <>
-              <UserDetail detail={user} />
-              <Title title={`${user.profile.nickname}创建的歌单`} />
-              <PlaylistList playlistList={userPlaylist} />
-              <Divider sx={{ my: 5 }} />
-              <Title title={`${user.profile.nickname}收藏的歌单`} />
-              <PlaylistList playlistList={otherPlaylist} />
-            </>
-          )}
-        </>
-      )}
+      <>
+        <UserDetail detail={user} />
+        <Title title={`Ta创建的歌单`} />
+        <PlaylistList playlistList={userPlaylist} />
+        <Divider sx={{ my: 5 }} />
+        <Title title={`Ta收藏的歌单`} />
+        <PlaylistList playlistList={otherPlaylist} />
+      </>
     </>
   );
 };
