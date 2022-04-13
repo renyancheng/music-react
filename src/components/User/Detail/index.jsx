@@ -89,7 +89,7 @@ export const UserDetail = ({ detail, profile }) => {
                 </Grid>
                 <Grid xs={12} sm={12} md={12} lg={12} item sx={{ m: 1 }}>
                   <Stack direction="row" spacing={1}>
-                    {detail.profile.userId === profile.userId ? (
+                    {detail.profile.userId === profile?.userId ? (
                       <>
                         <Button
                           variant="outlined"
