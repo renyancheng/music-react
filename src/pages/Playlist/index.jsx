@@ -51,7 +51,7 @@ const Playlist = ({ addSongs }) => {
 
   return (
     <>
-      {loadingPlaylist || loadingSongList ? (
+      {loadingPlaylist ? (
         <>
           <Skeleton variant="rectangular" height={250} sx={{ mb: 2 }} />
           <Skeleton variant="rectangular" height={350} />
@@ -71,7 +71,11 @@ const Playlist = ({ addSongs }) => {
               <Box>
                 <Card>
                   <CardContent>
-                    <SongList songList={songList} />
+                    {loadingSongList ? (
+                      <Skeleton variant="rectangular" height={350} />
+                    ) : (
+                      <SongList songList={songList} />
+                    )}
                   </CardContent>
                 </Card>
               </Box>
