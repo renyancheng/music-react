@@ -49,12 +49,12 @@ const SongList = ({ songList, songs, current, updateSetting, addSongs }) => {
                       <Typography
                         component="span"
                         color={
-                          song.id !== songs[current].id
+                          song.id !== songs[current]?.id
                             ? "text.primary"
                             : "primary"
                         }
                       >
-                        {song.id === songs[current].id ? "正在播放：" : null}
+                        {song.id === songs[current]?.id ? "正在播放：" : null}
                         {song.name}
                       </Typography>
                     </>
