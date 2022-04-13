@@ -9,10 +9,10 @@ import {
   Slider,
   Dialog,
   DialogTitle,
-  DialogContent
+  DialogContent,
 } from "@mui/material";
 import SongList from "../../components/SongList";
-import { useToggle } from "ahooks";
+import { useKeyPress } from "ahooks";
 import pubsub from "pubsub-js";
 
 const formatTime = (second) =>
@@ -67,6 +67,16 @@ const AudioPlayer = ({
         }
       },
     });
+
+  useKeyPress(["space"], () => {
+    togglePlayPause();
+  });
+  useKeyPress(["leftarrow"], () => {
+    changeSong(current - 1);
+  });
+  useKeyPress(["rightarrow"], () => {
+    changeSong(current - 1);
+  });
 
   const { percentComplete, duration, seek, position } = useAudioPosition({
     highRefreshRate: true,
