@@ -35,8 +35,8 @@ const AudioPlayer = ({
       format: "mp3",
       autoplay: true,
       preload: true,
-      html5: true,
-      pool: 1,
+      // html5: true,
+      // pool: 1,
       // onload: () => console.log("加载了"),
       onplayerror: (_, err) => {
         console.log("播放失败:", err);
@@ -46,12 +46,12 @@ const AudioPlayer = ({
         changeSong(current + 1);
       },
       /* xhr: {
-      method: "POST",
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-      },
-      withCredentials: true,
-    }, */
+        method: "POST",
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+        },
+        withCredentials: true,
+      }, */
       // onplay: () => console.log("播放开始"),
       onend: () => {
         switch (mode) {

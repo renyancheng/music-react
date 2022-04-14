@@ -164,7 +164,7 @@ const PlayerDialog = ({ songs, current, src, updateSetting, lyric, mode }) => {
                 alignItems="center"
               >
                 <AudioPlayer
-                  // src={`https://music.163.com/song/media/outer/url?id=${songs[current].id}.mp3`}
+                  // src={`http://music.163.com/song/media/outer/url?id=${songs[current]?.id}.mp3`}
                   src={src}
                   currentSong={songs[current]}
                   changeSong={changeSong}
