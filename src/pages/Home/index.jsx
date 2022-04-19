@@ -28,10 +28,11 @@ export const Home = ({ isLogin }) => {
     { refreshDeps: [isLogin] }
   );
 
-  const { data: recommendSongs, loading: loadingRecommendSongs } = useRequest(
-    getRecommendSongs,
-    { refreshDeps: [isLogin] }
-  );
+  const {
+    data: recommendSongs,
+    loading: loadingRecommendSongs,
+    refresh: refreshRecommandSongs,
+  } = useRequest(getRecommendSongs, { refreshDeps: [isLogin] });
 
   return (
     <>
@@ -74,11 +75,15 @@ export const Home = ({ isLogin }) => {
                     songList={recommendSongs?.data?.dailySongs.splice(0, 3)}
                   />
                 </CardContent>
-                <CardActions>
-                  <Button size="large" fullWidth>
-                    <Icon>play_arrow</Icon> 播放
+                {/* <CardActions>
+                  <Button
+                    size="large"
+                    fullWidth
+                    onClick={() => refreshRecommandSongs()}
+                  >
+                    <Icon>refresh</Icon> 换一换
                   </Button>
-                </CardActions>
+                </CardActions> */}
               </Card>
             </>
           )}

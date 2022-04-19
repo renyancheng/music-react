@@ -1,8 +1,6 @@
 import axios from "axios";
 import { store } from "../redux/store";
 
-const state = store.getState();
-
 // 创建一个独立的axios实例
 const service = axios.create({
   // 设置baseUr地址,如果通过proxy跨域可直接填写base地址
@@ -17,6 +15,7 @@ const service = axios.create({
 });
 // 请求拦截
 service.interceptors.request.use((config) => {
+  const state = store.getState();
   // 自定义header，可添加项目token
   // console.log(config);
   config.params.cookie = state.auth.cookie;
@@ -28,9 +27,10 @@ service.interceptors.response.use(
   (response) => {
     // 获取接口返回结果
     const res = response.data;
-    // code为0，直接把结果返回回去，这样前端代码就不用在获取一次data.
+    // code为200，直接把结果返回回去
     if (res.code === 200) {
       return res;
+      // code为301让它去登录
     } else if (response.status === 301) {
       // 也可使用router进行跳转
       window.location.href = "/#/login";
