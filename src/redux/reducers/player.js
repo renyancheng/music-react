@@ -33,7 +33,9 @@ export default function player(preState = initState, { type, data }) {
         data.songs.forEach((newSong) => {
           songs = songs.filter((song) => song.id !== newSong.id);
         });
-        songs = [...songs, ...data.songs];
+        console.log(songs);
+        songs = [...data.songs, ...songs];
+        console.log(songs);
         set("songs", songs);
         return { ...preState, songs };
       }

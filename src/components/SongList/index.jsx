@@ -21,10 +21,30 @@ import { nanoid } from "nanoid";
 
 const SongList = ({ songList, songs, current, updateSetting, addSongs }) => {
   const addOneSong = (song) => {
+    // console.log(songs[songs.length - 1]);
     addSongs({
       songs: [song],
     });
-    updateSetting({ current: songs.length - 1 === -1 ? 0 : songs.length - 1 });
+    updateSetting({
+      // current: songs.length - 1 === -1 ? 0 : songs.length - 1,
+      current: 0,
+    });
+
+    /* new Promise((resolve, reject) => {
+      console.log(songs[songs.length - 1], songs.length);
+
+      setTimeout(() => {
+        addSongs({
+          songs: [song],
+        });
+        resolve(songs);
+      }, 0);
+    }).then((songs) => {
+      updateSetting({
+        current: songs.length - 1 === -1 ? 0 : songs.length - 1,
+      });
+      console.log(songs[songs.length - 1], songs.length);
+    }); */
   };
 
   return (

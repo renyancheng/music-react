@@ -108,7 +108,7 @@ const PlayerDialog = ({ songs, current, src, updateSetting, lyric, mode }) => {
         <Icon>headphones</Icon>
         {md ? (
           <Typography variant="body2" sx={{ ml: 1 }}>
-            {`正在播放：${songs[current].name.substr(0, 8)}...`}
+            {`正在播放：${songs[current]?.name.substr(0, 8)}...`}
           </Typography>
         ) : null}
       </Fab>
