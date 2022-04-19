@@ -8,14 +8,22 @@ import {
 } from "../constant";
 
 const initState = {
-  songs: get("songs") || [],
-  setting: get("setting") || {
+  songs: [],
+  setting: {
     current: 0,
     src: null,
     lyric: null,
     volume: 1,
     mode: "order", // random, repeat
   },
+  /* songs: get("songs") || [],
+  setting: get("setting") || {
+    current: 0,
+    src: null,
+    lyric: null,
+    volume: 1,
+    mode: "order", // random, repeat
+  }, */
 };
 
 export default function player(preState = initState, { type, data }) {
@@ -24,8 +32,8 @@ export default function player(preState = initState, { type, data }) {
       if (data?.replace === true) {
         const songs = [...data.songs];
         const setting = { ...preState.setting, current: 0 };
-        set("songs", songs);
-        set("setting", setting);
+        // set("songs", songs);
+        // set("setting", setting);
         return { songs, setting };
       } else {
         let songs = [...preState.songs, ...data.songs]; // 所有歌曲播放列表
@@ -33,15 +41,13 @@ export default function player(preState = initState, { type, data }) {
         data.songs.forEach((newSong) => {
           songs = songs.filter((song) => song.id !== newSong.id);
         });
-        console.log(songs);
         songs = [...data.songs, ...songs];
-        console.log(songs);
-        set("songs", songs);
+        // set("songs", songs);
         return { ...preState, songs };
       }
     case UPDATE_SETTING:
       let setting = { ...preState.setting, ...data };
-      set("setting", setting);
+      // set("setting", setting);
       return { ...preState, setting };
     default:
       return preState;
