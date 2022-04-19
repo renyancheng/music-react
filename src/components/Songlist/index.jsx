@@ -51,70 +51,64 @@ const SongList = ({ songList, songs, current, updateSetting, addSongs }) => {
   return (
     <>
       {songList ? (
-        <Grid container>
-          <Grid sm={12} md={6} lg={4} item>
-            <List component="div" dense>
-              {songList?.map((song) => {
-                return (
-                  <ListItemButton
-                    key={song.id}
-                    sx={{ borderRadius: 2 }}
-                    disabled={Boolean(song.noCopyrightRcmd)}
-                    onClick={() => addOneSong(song)}
-                  >
-                    {/* <ListItemAvatar>
+        <List component="div" dense>
+          {songList?.map((song) => {
+            return (
+              <ListItemButton
+                key={song.id}
+                sx={{ borderRadius: 2 }}
+                disabled={Boolean(song.noCopyrightRcmd)}
+                onClick={() => addOneSong(song)}
+              >
+                {/* <ListItemAvatar>
                 <Avatar alt={song.name} src={song.al.picUrl} />
               </ListItemAvatar> */}
-                    <ListItemText
-                      primary={
-                        <>
-                          <Typography
-                            component="span"
-                            color={
-                              song.id !== songs[current]?.id
-                                ? "text.primary"
-                                : "primary"
-                            }
-                          >
-                            {song.id === songs[current]?.id
-                              ? "正在播放："
-                              : null}
-                            {song.name}
-                          </Typography>
-                        </>
-                      }
-                      secondary={
-                        <>
-                          <Typography
-                            sx={{ display: "inline" }}
-                            component="span"
-                            variant="body2"
-                            color="text.secondary"
-                          >
-                            {song.ar.map((ar) => {
-                              return (
-                                <Link
-                                  key={nanoid()}
-                                  component={RouterLink}
-                                  to={`/artist/${ar.id}`}
-                                  sx={{ mr: 1 }}
-                                  underline="hover"
-                                  color="inherit"
-                                >
-                                  {ar.name}
-                                </Link>
-                              );
-                            })}
-                          </Typography>
-                        </>
-                      }
-                    />
-                  </ListItemButton>
-                );
-              })}
-            </List>
-          </Grid>
-        </Grid>
+                <ListItemText
+                  primary={
+                    <>
+                      <Typography
+                        component="span"
+                        color={
+                          song.id !== songs[current]?.id
+                            ? "text.primary"
+                            : "primary"
+                        }
+                      >
+                        {song.id === songs[current]?.id ? "正在播放：" : null}
+                        {song.name}
+                      </Typography>
+                    </>
+                  }
+                  secondary={
+                    <>
+                      <Typography
+                        sx={{ display: "inline" }}
+                        component="span"
+                        variant="body2"
+                        color="text.secondary"
+                      >
+                        {song.ar.map((ar) => {
+                          return (
+                            <Link
+                              key={nanoid()}
+                              component={RouterLink}
+                              to={`/artist/${ar.id}`}
+                              sx={{ mr: 1 }}
+                              underline="hover"
+                              color="inherit"
+                            >
+                              {ar.name}
+                            </Link>
+                          );
+                        })}
+                      </Typography>
+                    </>
+                  }
+                />
+              </ListItemButton>
+            );
+          })}
+        </List>
       ) : (
         <>loading...</>
       )}
