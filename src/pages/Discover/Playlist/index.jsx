@@ -47,7 +47,7 @@ const Playlists = () => {
                 <Grid xs={2} item>
                   <Typography>语种</Typography>
                 </Grid>
-                <Grid xs={10}>
+                <Grid xs={10} item>
                   {highQualityPlaylistTags.tags.map((tag) => (
                     <span key={tag.name}>
                       {tag.category === 0 && (
@@ -66,7 +66,7 @@ const Playlists = () => {
                 <Grid xs={2} item>
                   <Typography>风格</Typography>
                 </Grid>
-                <Grid xs={10}>
+                <Grid xs={10} item>
                   {highQualityPlaylistTags.tags.map((tag) => (
                     <span key={tag.name}>
                       {tag.category === 1 && (
@@ -85,7 +85,7 @@ const Playlists = () => {
                 <Grid xs={2} item>
                   <Typography>场景</Typography>
                 </Grid>
-                <Grid xs={10}>
+                <Grid xs={10} item>
                   {highQualityPlaylistTags.tags.map((tag) => (
                     <span key={tag.name}>
                       {tag.category === 2 && (
@@ -104,7 +104,7 @@ const Playlists = () => {
                 <Grid xs={2} item>
                   <Typography>情感</Typography>
                 </Grid>
-                <Grid xs={10}>
+                <Grid xs={10} item>
                   {highQualityPlaylistTags.tags.map((tag) => (
                     <span key={tag.name}>
                       {tag.category === 3 && (
@@ -123,7 +123,7 @@ const Playlists = () => {
                 <Grid xs={2} item>
                   <Typography>主题</Typography>
                 </Grid>
-                <Grid xs={10}>
+                <Grid xs={10} item>
                   {highQualityPlaylistTags.tags.map((tag) => (
                     <span key={tag.name}>
                       {tag.category === 4 && (
