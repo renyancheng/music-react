@@ -13,11 +13,11 @@ import {
 } from "@mui/material";
 import numeral from "numeral";
 
-const PlaylistList = ({ playlistList }) => {
+const PlaylistList = ({ playlistList, loading }) => {
   const navigate = useNavigate();
   return (
     <>
-      {playlistList ? (
+      {playlistList && !loading ? (
         <Grid spacing={2} container>
           {playlistList?.map((playlist) => {
             return (
@@ -72,7 +72,7 @@ const PlaylistList = ({ playlistList }) => {
       ) : (
         <>
           <Grid container>
-            <Grid xs={6} sm={3} md={3} lg={2.4} item>
+            <Grid xs={6} sm={3} md={2.4} lg={2} item>
               <Card>
                 <Skeleton variant="rectangular" height={150} />
                 <CardContent>

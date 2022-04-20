@@ -13,6 +13,8 @@ export const urls = {
   getRecommendPlaylist: "/recommend/resource",
   getSearchSuggest: "/search/suggest",
   getSearchResult: "/cloudsearch",
+  getHighQualityPlaylist: "/top/playlist/highquality",
+  getHighQualityPlaylistTags: "/playlist/highquality/tags",
 };
 
 // 手机号登录
@@ -73,4 +75,14 @@ export function getSearchSuggest(keywords) {
 // 获取搜索结果
 export function getSearchResult(keywords) {
   return get(urls.getSearchResult, { keywords });
+}
+
+// 获取精品歌单
+export function getHighQualityPlaylist(cat = "全部", limit = 30) {
+  return get(urls.getHighQualityPlaylist, { cat, limit });
+}
+
+// 获取精品歌单标签
+export function getHighQualityPlaylistTags() {
+  return get(urls.getHighQualityPlaylistTags, {});
 }

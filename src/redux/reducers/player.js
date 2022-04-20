@@ -11,6 +11,7 @@ const initState = {
   songs: [],
   setting: {
     current: 0,
+    currentTime: 0,
     src: null,
     lyric: null,
     volume: 1,

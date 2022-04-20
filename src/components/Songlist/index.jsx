@@ -69,6 +69,7 @@ const SongList = ({ songList, songs, current, updateSetting, addSongs }) => {
                     effect="opacity"
                     src={song.al.picUrl}
                     placeholderSrc={song.al.picUrl}
+                    style={{ borderRadius: 5}}
                   />
                 </ListItemAvatar>
                 <ListItemText
