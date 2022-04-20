@@ -17,6 +17,7 @@ import {
   Grid,
   IconButton,
 } from "@mui/material";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 import { updateSetting, addSongs } from "../../redux/actions/player";
 import { nanoid } from "nanoid";
 
@@ -60,9 +61,16 @@ const SongList = ({ songList, songs, current, updateSetting, addSongs }) => {
                 disabled={Boolean(song.noCopyrightRcmd)}
                 onClick={() => addOneSong(song)}
               >
-                {/* <ListItemAvatar>
-                <Avatar alt={song.name} src={song.al.picUrl} />
-              </ListItemAvatar> */}
+                <ListItemAvatar>
+                  <LazyLoadImage
+                    alt={song.name}
+                    width={43}
+                    height={43}
+                    effect="opacity"
+                    src={song.al.picUrl}
+                    placeholderSrc={song.al.picUrl}
+                  />
+                </ListItemAvatar>
                 <ListItemText
                   primary={
                     <>
