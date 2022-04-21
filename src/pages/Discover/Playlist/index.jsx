@@ -23,6 +23,14 @@ import PlaylistList from "../../../components/Playlist/List";
 const Playlists = () => {
   const [category, setCategory] = useState("全部");
 
+  const categorys = [
+    { id: 0, name: "语种" },
+    { id: 1, name: "风格" },
+    { id: 2, name: "场景" },
+    { id: 3, name: "情感" },
+    { id: 4, name: "主题" },
+  ];
+
   const { data: highQualityPlaylist, loading: loadingHighQualityPlaylist } =
     useRequest(() => getHighQualityPlaylist(category), {
       refreshDeps: [category],
@@ -39,105 +47,38 @@ const Playlists = () => {
         <>
           <Accordion sx={{ my: 2 }}>
             <AccordionSummary expandIcon={<Icon>expand_more</Icon>}>
-              <Icon>label</Icon>
+              {/* <Icon>label</Icon> */}
               <Typography>歌单标签</Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <Grid sx={{ my: 1 }} container>
-                <Grid xs={2} item>
-                  <Typography>语种</Typography>
+              <Button
+                variant="outlined"
+                onClick={() => setCategory("全部")}
+                fullWidth
+              >
+                全部精品
+              </Button>
+              {categorys.map((cat) => (
+                <Grid sx={{ my: 1 }} container key={cat.id}>
+                  <Grid xs={2} item>
+                    <Typography>{cat.name}</Typography>
+                  </Grid>
+                  <Grid xs={10} item>
+                    {highQualityPlaylistTags.tags.map((tag) => (
+                      <span key={tag.name}>
+                        {tag.category === cat.id && (
+                          <Chip
+                            label={tag.name}
+                            color={tag.name == category ? "primary" : "default"}
+                            onClick={() => setCategory(tag.name)}
+                            sx={{ mr: 1, mb: 1 }}
+                          />
+                        )}
+                      </span>
+                    ))}
+                  </Grid>
                 </Grid>
-                <Grid xs={10} item>
-                  {highQualityPlaylistTags.tags.map((tag) => (
-                    <span key={tag.name}>
-                      {tag.category === 0 && (
-                        <Chip
-                          label={tag.name}
-                          color={tag.name == category ? "primary" : "default"}
-                          onClick={() => setCategory(tag.name)}
-                          sx={{ mr: 1 }}
-                        />
-                      )}
-                    </span>
-                  ))}
-                </Grid>
-              </Grid>
-              <Grid sx={{ my: 1 }} container>
-                <Grid xs={2} item>
-                  <Typography>风格</Typography>
-                </Grid>
-                <Grid xs={10} item>
-                  {highQualityPlaylistTags.tags.map((tag) => (
-                    <span key={tag.name}>
-                      {tag.category === 1 && (
-                        <Chip
-                          label={tag.name}
-                          color={tag.name == category ? "primary" : "default"}
-                          onClick={() => setCategory(tag.name)}
-                          sx={{ mr: 1, mb: 1 }}
-                        />
-                      )}
-                    </span>
-                  ))}
-                </Grid>
-              </Grid>
-              <Grid sx={{ my: 1 }} container>
-                <Grid xs={2} item>
-                  <Typography>场景</Typography>
-                </Grid>
-                <Grid xs={10} item>
-                  {highQualityPlaylistTags.tags.map((tag) => (
-                    <span key={tag.name}>
-                      {tag.category === 2 && (
-                        <Chip
-                          label={tag.name}
-                          color={tag.name == category ? "primary" : "default"}
-                          onClick={() => setCategory(tag.name)}
-                          sx={{ mr: 1 }}
-                        />
-                      )}
-                    </span>
-                  ))}
-                </Grid>
-              </Grid>
-              <Grid sx={{ my: 1 }} container>
-                <Grid xs={2} item>
-                  <Typography>情感</Typography>
-                </Grid>
-                <Grid xs={10} item>
-                  {highQualityPlaylistTags.tags.map((tag) => (
-                    <span key={tag.name}>
-                      {tag.category === 3 && (
-                        <Chip
-                          label={tag.name}
-                          color={tag.name == category ? "primary" : "default"}
-                          onClick={() => setCategory(tag.name)}
-                          sx={{ mr: 1 }}
-                        />
-                      )}
-                    </span>
-                  ))}
-                </Grid>
-              </Grid>
-              <Grid sx={{ my: 1 }} container>
-                <Grid xs={2} item>
-                  <Typography>主题</Typography>
-                </Grid>
-                <Grid xs={10} item>
-                  {highQualityPlaylistTags.tags.map((tag) => (
-                    <span key={tag.name}>
-                      {tag.category === 4 && (
-                        <Chip
-                          label={tag.name}
-                          color={tag.name == category ? "primary" : "default"}
-                          onClick={() => setCategory(tag.name)}
-                          sx={{ mr: 1 }}
-                        />
-                      )}
-                    </span>
-                  ))}
-                </Grid>
-              </Grid>
+              ))}
             </AccordionDetails>
           </Accordion>
         </>
