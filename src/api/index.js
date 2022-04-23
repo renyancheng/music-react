@@ -1,7 +1,10 @@
 import { get } from "./request";
 
 export const urls = {
+  // 登录
   loginByPhone: "/login/cellphone",
+
+  // 获取数据
   getUserDetail: "/user/detail",
   getPersonalizedPlaylist: "/personalized",
   getPlaylistDetail: "/playlist/detail",
@@ -15,6 +18,9 @@ export const urls = {
   getSearchResult: "/cloudsearch",
   getHighQualityPlaylist: "/top/playlist/highquality",
   getHighQualityPlaylistTags: "/playlist/highquality/tags",
+
+  // 操作
+  
 };
 
 // 手机号登录
