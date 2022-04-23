@@ -4,16 +4,19 @@ import { connect } from "react-redux";
 import { Container } from "@mui/material";
 import Header from "./layouts/Header";
 import PlayerDialog from "./layouts/PlayerDialog";
+import ScrollToTop from "./components/ScrollToTop";
 import "./App.css";
 
 export const App = ({ songs }) => {
   return (
     <>
+      <ScrollToTop>
+        <Container sx={{ mt: 10, mb: 2 }}>
+          <Outlet />
+        </Container>
+        {songs.length !== 0 && <PlayerDialog />}
+      </ScrollToTop>
       <Header />
-      <Container sx={{ mt: 10, mb: 2 }}>
-        <Outlet />
-      </Container>
-      {songs.length !== 0 && <PlayerDialog />}
     </>
   );
 };
