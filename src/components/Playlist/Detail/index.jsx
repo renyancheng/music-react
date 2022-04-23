@@ -22,7 +22,14 @@ import Description from "../../Description";
 
 moment.locale("zh-cn");
 
-export const PlaylistDetail = ({ detail, profile, playAll }) => {
+export const PlaylistDetail = ({
+  detail,
+  profile,
+  playAll,
+  disablePlay,
+  isLogin,
+  handleSubscribe,
+}) => {
   return (
     <>
       <Card sx={{ display: "flex" }}>
@@ -85,30 +92,50 @@ export const PlaylistDetail = ({ detail, profile, playAll }) => {
                     variant="contained"
                     startIcon={<Icon>play_arrow</Icon>}
                     onClick={() => playAll()}
+                    disabled={disablePlay}
                   >
                     播放
                   </Button>
-                  {detail.creator.userId === profile?.userId ? (
+                  {/* {detail.creator.userId === profile?.userId ? (
                     <>
                       <Button
                         variant="outlined"
                         color="primary"
                         startIcon={<Icon>edit</Icon>}
+                        size="small"
                       >
                         编辑歌单
                       </Button>
                     </>
                   ) : (
                     <>
-                      <Button
-                        variant="contained"
-                        color="secondary"
-                        startIcon={<Icon>star</Icon>}
-                      >
-                        收藏
-                      </Button>
+                      {isLogin && (
+                        <>
+                          {detail.subscribed ? (
+                            <Button
+                              variant="contained"
+                              color="secondary"
+                              startIcon={<Icon>cancel</Icon>}
+                              size="small"
+                              onClick={() => handleSubscribe(false)}
+                            >
+                              取消收藏
+                            </Button>
+                          ) : (
+                            <Button
+                              variant="contained"
+                              color="secondary"
+                              startIcon={<Icon>add</Icon>}
+                              size="small"
+                              onClick={() => handleSubscribe(true)}
+                            >
+                              收藏
+                            </Button>
+                          )}
+                        </>
+                      )}
                     </>
-                  )}
+                  )} */}
                 </Stack>
               </Grid>
               <Grid item sx={{ m: 1 }}>
@@ -180,6 +207,7 @@ export const PlaylistDetail = ({ detail, profile, playAll }) => {
   );
 };
 
-export default connect(({ auth: { profile } }) => ({
+export default connect(({ auth: { profile, isLogin } }) => ({
   profile,
+  isLogin,
 }))(PlaylistDetail);

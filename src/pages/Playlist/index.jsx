@@ -1,10 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { connect } from "react-redux";
-import { Skeleton, Box, CardContent, Card } from "@mui/material";
+import {
+  Skeleton,
+  Box,
+  CardContent,
+  Card,
+  Grid,
+  Typography,
+  Stack,
+} from "@mui/material";
 import { useRequest } from "ahooks";
 import { useSnackbar } from "notistack";
-import { getPlaylistDetail, getSongDetail } from "../../api";
+import { getPlaylistDetail, getSongDetail, subscribePlaylist } from "../../api";
 import { addSongs } from "../../redux/actions/player";
 import PlaylistDetail from "../../components/Playlist/Detail";
 import SongList from "../../components/SongList";
@@ -17,18 +25,26 @@ function getStringTrackIds(trackIds) {
 const Playlist = ({ addSongs }) => {
   const params = useParams();
   const { enqueueSnackbar } = useSnackbar();
-  const { data: playlist, loading: loadingPlaylist } = useRequest(
-    getPlaylistDetail,
-    {
-      defaultParams: [params.id],
-    }
-  );
+  const {
+    data: playlist,
+    loading: loadingPlaylist,
+    refresh: refreshPlaylist,
+  } = useRequest(getPlaylistDetail, {
+    defaultParams: [params.id],
+  });
   const { runAsync: runGetSongList, loading: loadingSongList } = useRequest(
     getSongDetail,
     {
       manual: true,
+      cacheKey: "staleTime-0",
+      staleTime: 0,
     }
   );
+
+  const { run: runSubscribePlaylist, loading: loadingSubscribePlaylist } =
+    useRequest(subscribePlaylist, {
+      manual: true,
+    });
 
   const [songList, setSongList] = useState(undefined);
 
@@ -39,6 +55,7 @@ const Playlist = ({ addSongs }) => {
       );
       setSongList(result.songs);
     }
+    // console.log(playlist.playlist.subscribed);
   }, [playlist]);
 
   const handlePlayAll = () => {
@@ -49,12 +66,33 @@ const Playlist = ({ addSongs }) => {
     enqueueSnackbar("已添加到播放列表");
   };
 
+  const handleSubscribe = (type) => {
+    runSubscribePlaylist(params.id, type);
+    refreshPlaylist();
+    let msg = type ? "收藏成功" : "取消收藏成功";
+    enqueueSnackbar(msg, {
+      type: "success",
+    });
+  };
+
   return (
     <>
       {loadingPlaylist ? (
         <>
-          <Skeleton variant="rectangular" height={250} sx={{ mb: 2 }} />
-          <Skeleton variant="rectangular" height={350} />
+          <Box sx={{ mb: 2 }}>
+            <Card>
+              <CardContent>
+                <Skeleton variant="rectangular" height={200} />
+              </CardContent>
+            </Card>
+          </Box>
+          <Box>
+            <Card>
+              <CardContent>
+                <Skeleton variant="rectangular" height={300} />
+              </CardContent>
+            </Card>
+          </Box>
         </>
       ) : (
         <>
@@ -66,6 +104,8 @@ const Playlist = ({ addSongs }) => {
                 <PlaylistDetail
                   detail={playlist.playlist}
                   playAll={handlePlayAll}
+                  disablePlay={loadingSongList}
+                  handleSubscribe={handleSubscribe}
                 />
               </Box>
               <Box>

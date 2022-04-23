@@ -20,7 +20,7 @@ export const urls = {
   getHighQualityPlaylistTags: "/playlist/highquality/tags",
 
   // 操作
-  
+  subscribePlaylist: "/playlist/subscribe",
 };
 
 // 手机号登录
@@ -91,4 +91,10 @@ export function getHighQualityPlaylist(cat = "全部", limit = 30) {
 // 获取精品歌单标签
 export function getHighQualityPlaylistTags() {
   return get(urls.getHighQualityPlaylistTags, {});
+}
+
+// 收藏歌单
+export function subscribePlaylist(id, type) {
+  let t = type ? "1" : "2";
+  return get(urls.subscribePlaylist, { id, t });
 }

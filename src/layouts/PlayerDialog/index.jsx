@@ -16,7 +16,7 @@ import {
   Box,
 } from "@mui/material";
 import pubsub from "pubsub-js";
-import { useRequest, useResponsive } from "ahooks";
+import { useRequest, useResponsive, useKeyPress } from "ahooks";
 import { updateSetting } from "../../redux/actions/player";
 import { getSongUrl, getSongLyric } from "../../api";
 import AudioPlayer from "../../components/AudioPlayer";
@@ -64,6 +64,10 @@ const PlayerDialog = ({ songs, current, src, updateSetting, lyric, mode }) => {
       changeSong(current + 1);
     }
   }, [songs, current]);
+
+  useKeyPress("shift.a", () => {
+    playerDialog ? setPlayerDialog(false) : setPlayerDialog(true);
+  });
 
   const changeSong = (index) => {
     const songsCount = songs.length - 1;
