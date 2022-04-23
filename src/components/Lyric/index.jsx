@@ -31,7 +31,7 @@ const Lyric = ({ lrc, currentTime }) => {
           <Box
             sx={{
               display: "flex",
-              height: 500,
+              height: "80vh",
               overflowY: "scroll",
               // alignItems: "center",
               justifyContent: "center",

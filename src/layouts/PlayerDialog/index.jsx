@@ -125,14 +125,22 @@ const PlayerDialog = ({ songs, current, src, updateSetting, lyric, mode }) => {
         <Paper
           sx={{
             width: "100%",
-            // height: "100%",
+            height: "100%",
             background: `url(${songs[current]?.al.picUrl})`,
-            filter: "blur(60px) brightness(60%)",
-            height: 1000,
+            backgroundSize: "cover",
+            // filter: "blur(80px) brightness(50%)",
             transition: "background 0.5s ease 0.5s",
           }}
-        />
-        <AppBar sx={{ backgroundColor: "transparent", boxShadow: 0 }}>
+        ></Paper>
+        <AppBar
+          sx={{
+            width: "100%",
+            height: "100%",
+            backgroundColor: "transparent",
+            boxShadow: 0,
+            backdropFilter: "blur(80px) brightness(80%)",
+          }}
+        >
           <DialogContent sx={{ p: 0, m: 0 }}>
             <Toolbar sx={{}}>
               <Box
