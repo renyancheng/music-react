@@ -6,9 +6,10 @@ import App from "./App";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import User from "./pages/User";
-import Search from "./pages/Search"
+import Search from "./pages/Search";
 import Playlist from "./pages/Playlist";
 import DiscoverPlaylist from "./pages/Discover/Playlist";
+import DiscoverToplist from "./pages/Discover/Toplist";
 import NotFound from "./pages/NotFound";
 
 export const Router = ({ isLogin }) => {
@@ -24,6 +25,7 @@ export const Router = ({ isLogin }) => {
             path="/discover/playlist"
             element={<DiscoverPlaylist />}
           ></Route>
+          <Route path="/discover/toplist" element={<DiscoverToplist />}></Route>
           <Route
             path="/login"
             element={<>{isLogin ? <Navigate to="/" /> : <Login />}</>}

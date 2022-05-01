@@ -18,6 +18,7 @@ export const urls = {
   getSearchResult: "/cloudsearch",
   getHighQualityPlaylist: "/top/playlist/highquality",
   getHighQualityPlaylistTags: "/playlist/highquality/tags",
+  getToplistDetail: "toplist/detail",
 
   // 操作
   subscribePlaylist: "/playlist/subscribe",
@@ -97,4 +98,8 @@ export function getHighQualityPlaylistTags() {
 export function subscribePlaylist(id, type) {
   let t = type ? "1" : "2";
   return get(urls.subscribePlaylist, { id, t });
+}
+
+export function getToplistDetail() {
+  return get(urls.getToplistDetail, {});
 }

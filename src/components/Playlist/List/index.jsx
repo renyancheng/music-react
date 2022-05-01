@@ -10,78 +10,130 @@ import {
   Skeleton,
   Chip,
   Box,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemButton,
+  ListItemAvatar,
 } from "@mui/material";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 import numeral from "numeral";
 
-const PlaylistList = ({ playlistList, loading }) => {
+const PlaylistList = ({ playlistList, loading, variant = "card" }) => {
   const navigate = useNavigate();
   return (
     <>
       {playlistList && !loading ? (
-        <Grid spacing={2} container>
-          {playlistList?.map((playlist) => {
-            return (
-              <Grid xs={6} sm={3} md={2.4} lg={2} key={playlist.id} item>
-                <Card>
-                  <CardActionArea
-                    onClick={() => {
-                      navigate(`/playlist/${playlist.id}`);
-                    }}
-                  >
-                    <CardMedia
-                      component="img"
-                      alt="green iguana"
-                      image={playlist?.picUrl || playlist?.coverImgUrl}
-                    />
-                    <CardContent>
-                      <Typography variant="body1">{playlist.name}</Typography>
-                      {/* <Box sx={{ display: { xs: "none", sm: "block" } }}>
-                      <Chip
-                        color="primary"
-                        size="small"
-                        variant="outlined"
-                        sx={{ mr: 1 }}
-                        label={`${numeral(playlist.playCount).format(
-                          "0a"
-                        )}播放`}
-                      />
-                      <Chip
-                        color="primary"
-                        size="small"
-                        variant="outlined"
-                        label={`${numeral(
-                          playlist.subscribedCount || playlist.trackCount
-                        ).format("0a")}收藏`}
-                      />
-                    </Box> */}
-
-                      <Typography
-                        variant="body2"
-                        color="text.secondary"
-                        sx={{ display: { xs: "none", sm: "block" } }}
+        <>
+          {variant === "card" ? (
+            <Grid spacing={2} container>
+              {playlistList?.map((playlist) => {
+                return (
+                  <Grid xs={6} sm={3} md={2.4} lg={2} key={playlist.id} item>
+                    <Card>
+                      <CardActionArea
+                        onClick={() => {
+                          navigate(`/playlist/${playlist.id}`);
+                        }}
                       >
-                        {playlist.copywriter}
-                      </Typography>
-                    </CardContent>
-                  </CardActionArea>
-                </Card>
-              </Grid>
-            );
-          })}
-        </Grid>
+                        <CardMedia
+                          component="img"
+                          alt="green iguana"
+                          image={playlist?.picUrl || playlist?.coverImgUrl}
+                        />
+                        <CardContent>
+                          <Typography variant="body1">
+                            {playlist.name}
+                          </Typography>
+                          <Typography
+                            variant="body2"
+                            color="text.secondary"
+                            sx={{ display: { xs: "none", sm: "block" } }}
+                          >
+                            {playlist.copywriter}
+                          </Typography>
+                        </CardContent>
+                      </CardActionArea>
+                    </Card>
+                  </Grid>
+                );
+              })}
+            </Grid>
+          ) : (
+            <>
+              <List component="div" dense>
+                {playlistList?.map((playlist) => {
+                  return (
+                    <ListItemButton
+                      key={playlist.id}
+                      sx={{
+                        borderRadius: 2,
+                      }}
+                      onClick={() => navigate(`/playlist/${playlist.id}`)}
+                    >
+                      <ListItemAvatar
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                        }}
+                      >
+                        <LazyLoadImage
+                          alt={playlist.name}
+                          width={45}
+                          height={45}
+                          effect="opacity"
+                          src={playlist.coverImgUrl || playlist.picUrl}
+                          placeholderSrc={
+                            playlist.coverImgUrl || playlist.picUrl
+                          }
+                          style={{ borderRadius: 5 }}
+                        />
+                      </ListItemAvatar>
+                      <ListItemText
+                        primary={
+                          <>
+                            <Typography component="span" color="text.primary">
+                              {playlist.name}
+                            </Typography>
+                          </>
+                        }
+                        secondary={
+                          <>
+                            <Typography
+                              sx={{ display: "inline" }}
+                              component="span"
+                              variant="body2"
+                              color="text.secondary"
+                            >
+                              {playlist.copywriter}
+                            </Typography>
+                          </>
+                        }
+                      />
+                    </ListItemButton>
+                  );
+                })}
+              </List>
+            </>
+          )}
+        </>
       ) : (
         <>
-          <Grid container>
-            <Grid xs={6} sm={3} md={2.4} lg={2} item>
-              <Card>
-                <Skeleton variant="rectangular" height={150} />
-                <CardContent>
-                  <Skeleton variant="text" />
-                  <Skeleton variant="text" width="50%" />
-                </CardContent>
-              </Card>
+          {variant === "card" ? (
+            <Grid container>
+              <Grid xs={6} sm={3} md={2.4} lg={2} item>
+                <Card>
+                  <Skeleton variant="rectangular" height={150} />
+                  <CardContent>
+                    <Skeleton variant="text" />
+                    <Skeleton variant="text" width="50%" />
+                  </CardContent>
+                </Card>
+              </Grid>
             </Grid>
-          </Grid>
+          ) : (
+            <Skeleton variant="rectangular" height={50} />
+          )}
         </>
       )}
     </>
