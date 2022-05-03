@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 import {
   Box,
@@ -30,6 +30,8 @@ export const PlaylistDetail = ({
   isLogin,
   handleSubscribe,
 }) => {
+  const navigate = useNavigate();
+
   return (
     <>
       <Card sx={{ display: "flex" }}>
@@ -152,8 +154,9 @@ export const PlaylistDetail = ({
                         }
                         label={detail.creator.nickname}
                         variant="outlined"
-                        component={Link}
-                        to={`/user/home/${detail.creator.userId}`}
+                        onClick={() =>
+                          navigate(`/user/home/${detail.creator.userId}`)
+                        }
                       />
                     }
                   />

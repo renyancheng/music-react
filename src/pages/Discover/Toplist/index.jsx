@@ -16,12 +16,8 @@ const Toplist = () => {
         <>
           <Grid container>
             <Grid xs={12} md={12} item>
-              <Card>
-                <CardContent>
-                  <Title title="全部排行榜" />
-                  <Skeleton height={300} variant="rectangular" />
-                </CardContent>
-              </Card>
+              <Title title="全部排行榜" />
+              <Skeleton height={300} variant="rectangular" />
             </Grid>
           </Grid>
         </>

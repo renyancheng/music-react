@@ -18,6 +18,7 @@ import {
   IconButton,
 } from "@mui/material";
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import LazyLoad from "react-lazyload";
 import { updateSetting, addSongs } from "../../redux/actions/player";
 import { nanoid } from "nanoid";
 
@@ -62,7 +63,21 @@ const SongList = ({ songList, songs, current, updateSetting, addSongs }) => {
                 onClick={() => addOneSong(song)}
               >
                 <ListItemAvatar>
-                  <LazyLoadImage
+                  <LazyLoad>
+                    {song.id !== songs[current]?.id ? (
+                      <Avatar
+                        alt={song.name}
+                        src={song.al.picUrl}
+                        loading="lazy"
+                        variant="rounded"
+                      />
+                    ) : (
+                      <Avatar sx={{ bgcolor: "primary.main" }}>
+                        <Icon>play_arrow</Icon>
+                      </Avatar>
+                    )}
+
+                    {/* <LazyLoadImage
                     alt={song.name}
                     width={43}
                     height={43}
@@ -70,8 +85,10 @@ const SongList = ({ songList, songs, current, updateSetting, addSongs }) => {
                     src={song.al.picUrl}
                     placeholderSrc={song.al.picUrl}
                     style={{ borderRadius: 5}}
-                  />
+                  /> */}
+                  </LazyLoad>
                 </ListItemAvatar>
+
                 <ListItemText
                   primary={
                     <>
@@ -83,7 +100,7 @@ const SongList = ({ songList, songs, current, updateSetting, addSongs }) => {
                             : "primary"
                         }
                       >
-                        {song.id === songs[current]?.id ? "正在播放：" : null}
+                        {song.id === songs[current]?.id ? "播放中：" : null}
                         {song.name}
                       </Typography>
                     </>

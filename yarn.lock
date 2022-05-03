@@ -1302,6 +1302,11 @@ react-lazy-load-image-component@^1.5.4:
     lodash.debounce "^4.0.8"
     lodash.throttle "^4.1.1"
 
+react-lazyload@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.npmmirror.com/react-lazyload/-/react-lazyload-3.2.0.tgz#497bd06a6dbd7015e3376e1137a67dc47d2dd021"
+  integrity sha512-zJlrG8QyVZz4+xkYZH5v1w3YaP5wEFaYSUWC4CT9UXfK75IfRAIEdnyIUF+dXr3kX2MOtL1lUaZmaQZqrETwgw==
+
 react-redux@^7.2.6:
   version "7.2.8"
   resolved "https://registry.npmmirror.com/react-redux/-/react-redux-7.2.8.tgz#a894068315e65de5b1b68899f9c6ee0923dd28de"
