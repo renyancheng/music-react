@@ -18,7 +18,8 @@ export const urls = {
   getSearchResult: "/cloudsearch",
   getHighQualityPlaylist: "/top/playlist/highquality",
   getHighQualityPlaylistTags: "/playlist/highquality/tags",
-  getToplistDetail: "toplist/detail",
+  getToplistDetail: "/toplist/detail",
+  getToplistArtist: "/toplist/artist",
 
   // 操作
   subscribePlaylist: "/playlist/subscribe",
@@ -100,6 +101,12 @@ export function subscribePlaylist(id, type) {
   return get(urls.subscribePlaylist, { id, t });
 }
 
+// 获取排行榜
 export function getToplistDetail() {
   return get(urls.getToplistDetail, {});
+}
+
+// 获取歌手排行榜
+export function getToplistArtist() {
+  return get(urls.getToplistArtist, {});
 }

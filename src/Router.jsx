@@ -10,6 +10,7 @@ import Search from "./pages/Search";
 import Playlist from "./pages/Playlist";
 import DiscoverPlaylist from "./pages/Discover/Playlist";
 import DiscoverToplist from "./pages/Discover/Toplist";
+import DiscoverArtist from "./pages/Discover/Artist";
 import NotFound from "./pages/NotFound";
 
 export const Router = ({ isLogin }) => {
@@ -26,6 +27,7 @@ export const Router = ({ isLogin }) => {
             element={<DiscoverPlaylist />}
           ></Route>
           <Route path="/discover/toplist" element={<DiscoverToplist />}></Route>
+          <Route path="/discover/artist" element={<DiscoverArtist />}></Route>
           <Route
             path="/login"
             element={<>{isLogin ? <Navigate to="/" /> : <Login />}</>}
