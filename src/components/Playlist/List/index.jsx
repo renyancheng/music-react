@@ -17,6 +17,7 @@ import {
   ListItemAvatar,
 } from "@mui/material";
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import LazyLoad from "react-lazyload";
 import numeral from "numeral";
 
 const PlaylistList = ({ playlistList, loading, variant = "card" }) => {
@@ -36,11 +37,14 @@ const PlaylistList = ({ playlistList, loading, variant = "card" }) => {
                           navigate(`/playlist/${playlist.id}`);
                         }}
                       >
-                        <CardMedia
-                          component="img"
-                          alt="green iguana"
-                          image={playlist?.picUrl || playlist?.coverImgUrl}
-                        />
+                        <LazyLoad>
+                          <CardMedia
+                            component="img"
+                            alt="green iguana"
+                            image={playlist?.picUrl || playlist?.coverImgUrl}
+                            loading="lazy"
+                          />
+                        </LazyLoad>
                         <CardContent>
                           <Typography variant="body1">
                             {playlist.name}
