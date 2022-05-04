@@ -8,6 +8,7 @@ import Login from "./pages/Login";
 import User from "./pages/User";
 import Search from "./pages/Search";
 import Playlist from "./pages/Playlist";
+import Artist from "./pages/Artist";
 import DiscoverPlaylist from "./pages/Discover/Playlist";
 import DiscoverToplist from "./pages/Discover/Toplist";
 import DiscoverArtist from "./pages/Discover/Artist";
@@ -22,6 +23,7 @@ export const Router = ({ isLogin }) => {
           <Route path="/search" element={<Search />}></Route>
           <Route path="/user/home/:uid" element={<User />}></Route>
           <Route path="/playlist/:id" element={<Playlist />}></Route>
+          <Route path="/artist/:id" element={<Artist />}></Route>
           <Route
             path="/discover/playlist"
             element={<DiscoverPlaylist />}

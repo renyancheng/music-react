@@ -20,6 +20,10 @@ export const urls = {
   getHighQualityPlaylistTags: "/playlist/highquality/tags",
   getToplistDetail: "/toplist/detail",
   getToplistArtist: "/toplist/artist",
+  getArtistDetail: "/artist/detail",
+  getArtistDesc: "/artist/desc",
+  getSimiArtist: "/simi/artist",
+  getArtistTopSong: "/artist/top/song",
 
   // 操作
   subscribePlaylist: "/playlist/subscribe",
@@ -109,4 +113,22 @@ export function getToplistDetail() {
 // 获取歌手排行榜
 export function getToplistArtist() {
   return get(urls.getToplistArtist, {});
+}
+
+// 获取歌手详情
+export function getArtistDetail(id) {
+  return get(urls.getArtistDetail, { id });
+}
+// 获取歌手介绍
+export function getArtistDesc(id) {
+  return get(urls.getArtistDesc, { id });
+}
+// 获取相似歌手
+export function getSimiArtist(id) {
+  return get(urls.getSimiArtist, { id });
+}
+
+// 获取歌手热门50首歌曲
+export function getArtistTopSong(id) {
+  return get(urls.getArtistTopSong, { id });
 }
