@@ -52,9 +52,9 @@ export const Header = ({ isLogin, profile, userLogout }) => {
       icon: "person",
     },
     {
-      name: "电台",
-      href: "/discover/djradio",
-      icon: "adjust",
+      name: "MV",
+      href: "/discover/mv",
+      icon: "ondemand_video",
     },
     {
       name: "搜索",
