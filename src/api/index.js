@@ -24,6 +24,14 @@ export const urls = {
   getArtistDesc: "/artist/desc",
   getSimiArtist: "/simi/artist",
   getArtistTopSong: "/artist/top/song",
+  getTopMv: "/top/mv",
+  getMvDetail: "/mv/detail",
+  getMvDetailInfo: "/mv/detail/info",
+  getMvUrl: "/mv/url",
+  getMvComment: "/comment/mv",
+  getSimiMv: "/simi/mv",
+  getPersonalizedMv: "/personalized/mv",
+  getLastMv: "/mv/first",
 
   // 操作
   subscribePlaylist: "/playlist/subscribe",
@@ -111,8 +119,8 @@ export function getToplistDetail() {
 }
 
 // 获取歌手排行榜
-export function getToplistArtist() {
-  return get(urls.getToplistArtist, {});
+export function getToplistArtist(type = 1) {
+  return get(urls.getToplistArtist, { type });
 }
 
 // 获取歌手详情
@@ -131,4 +139,43 @@ export function getSimiArtist(id) {
 // 获取歌手热门50首歌曲
 export function getArtistTopSong(id) {
   return get(urls.getArtistTopSong, { id });
+}
+
+// 获取MV排行榜
+export function getTopMv() {
+  return get(urls.getTopMv, {});
+}
+
+// 获取MV详情
+export function getMvDetail(mvid) {
+  return get(urls.getMvDetail, { mvid });
+}
+
+// 获取MV点赞转发评论数数据
+export function getMvDetailInfo(mvid) {
+  return get(urls.getMvDetailInfo, { mvid });
+}
+//获取MV播放地址
+export function getMvUrl(id) {
+  return get(urls.getMvUrl, { id });
+}
+
+// 获取MV评论
+export function getMvComment(id, page = 1) {
+  return get(urls.getMvComment, { id, limit: 5, offset: (page - 1) * 5 });
+}
+
+// 获取相似MV
+export function getSimiMv(mvid) {
+  return get(urls.getSimiMv, { mvid });
+}
+
+// 获取推荐MV
+export function getPersonalizedMv() {
+  return get(urls.getPersonalizedMv, {});
+}
+
+// 获取最新MV
+export function getLastMv() {
+  return get(urls.getLastMv, {});
 }

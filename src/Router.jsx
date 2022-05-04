@@ -9,9 +9,11 @@ import User from "./pages/User";
 import Search from "./pages/Search";
 import Playlist from "./pages/Playlist";
 import Artist from "./pages/Artist";
+import Mv from "./pages/Mv";
 import DiscoverPlaylist from "./pages/Discover/Playlist";
 import DiscoverToplist from "./pages/Discover/Toplist";
 import DiscoverArtist from "./pages/Discover/Artist";
+import DiscoverMv from "./pages/Discover/Mv";
 import NotFound from "./pages/NotFound";
 
 export const Router = ({ isLogin }) => {
@@ -24,12 +26,14 @@ export const Router = ({ isLogin }) => {
           <Route path="/user/home/:uid" element={<User />}></Route>
           <Route path="/playlist/:id" element={<Playlist />}></Route>
           <Route path="/artist/:id" element={<Artist />}></Route>
+          <Route path="/mv/:id" element={<Mv />}></Route>
           <Route
             path="/discover/playlist"
             element={<DiscoverPlaylist />}
           ></Route>
           <Route path="/discover/toplist" element={<DiscoverToplist />}></Route>
           <Route path="/discover/artist" element={<DiscoverArtist />}></Route>
+          <Route path="/discover/mv" element={<DiscoverMv />}></Route>
           <Route
             path="/login"
             element={<>{isLogin ? <Navigate to="/" /> : <Login />}</>}
