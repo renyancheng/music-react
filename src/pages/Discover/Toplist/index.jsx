@@ -8,7 +8,6 @@ import { getToplistDetail } from "../../../api";
 const Toplist = () => {
   const { loading: loadingToplist, data: toplist } =
     useRequest(getToplistDetail);
-  console.log(loadingToplist, toplist);
 
   return (
     <>
