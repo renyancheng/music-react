@@ -5,6 +5,7 @@ export const urls = {
   loginByPhone: "/login/cellphone",
 
   // 获取数据
+  getUserAccount: "/user/account",
   getUserDetail: "/user/detail",
   getPersonalizedPlaylist: "/personalized",
   getPlaylistDetail: "/playlist/detail",
@@ -32,14 +33,22 @@ export const urls = {
   getSimiMv: "/simi/mv",
   getPersonalizedMv: "/personalized/mv",
   getLastMv: "/mv/first",
+  getQrKey: "/login/qr/key",
 
   // 操作
   subscribePlaylist: "/playlist/subscribe",
+  createQr: "/login/qr/create",
+  checkQr: "/login/qr/check",
 };
 
 // 手机号登录
 export function loginByPhone(phone, password) {
   return get(urls.loginByPhone, { phone, password });
+}
+
+// 账户详情
+export function getUserAccount(cookie) {
+  return get(urls.getUserAccount, { cookie });
 }
 
 // 用户详情
@@ -178,4 +187,19 @@ export function getPersonalizedMv() {
 // 获取最新MV
 export function getLastMv() {
   return get(urls.getLastMv, {});
+}
+
+// 获取二维码Key
+export function getQrKey() {
+  return get(urls.getQrKey, {});
+}
+
+// 创建二维码
+export function createQr(key) {
+  return get(urls.createQr, { key, qrimg: true });
+}
+
+// 检测二维码状态
+export function checkQr(key) {
+  return get(urls.checkQr, { key });
 }

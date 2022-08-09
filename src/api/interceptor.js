@@ -18,8 +18,9 @@ service.interceptors.request.use((config) => {
   const state = store.getState();
   // 自定义header，可添加项目token
   // console.log(config);
-  config.params.cookie = state.auth.cookie;
+  if (state.auth.cookie) config.params.cookie = state.auth.cookie;
   config.params.realIP = "183.197.189.234";
+  config.params.timestamp = Date.now();
   return config;
 });
 // 返回拦截
