@@ -1,10 +1,29 @@
-import React from "react";
-import { Icon, Typography, Box, Avatar, CssBaseline } from "@mui/material";
+import React, { useState, useEffect } from "react";
+import {
+  Icon,
+  Typography,
+  Box,
+  Avatar,
+  CssBaseline,
+  Card,
+  CardContent,
+  Button,
+  CircularProgress,
+  CardActions,
+} from "@mui/material";
+import LoadingButton from "@mui/lab/LoadingButton";
+import { QRCode } from "react-qrcode";
 import { useRequest } from "ahooks";
 import { useSnackbar } from "notistack";
 import { connect } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
-import { loginByPhone } from "../../api";
+import {
+  loginByPhone,
+  getQrKey,
+  createQr,
+  checkQr,
+  getUserAccount,
+} from "../../api";
 import { userLogin } from "../../redux/actions/auth";
 import LoginForm from "../../components/Form/LoginForm";
 
@@ -17,23 +36,85 @@ export const Login = ({ userLogin }) => {
 
   // console.log(location)
 
-  const { loading, run, runAsync } = useRequest(loginByPhone, { manual: true });
+  // const { loading, run, runAsync } = useRequest(loginByPhone, { manual: true });
 
-  const onSubmit = async ({ phone, password }) => {
-    const result = await runAsync(phone, password);
-    let variant;
-    if (result.code === 200) {
-      variant = "success";
-      result.msg = "登录成功";
-      userLogin(result);
-      setTimeout(() => {
-        navigate(location.state?.from || "/", { replace: true });
-      }, 1000);
-    } else {
-      variant = "error";
+  const {
+    data: qrKey,
+    loading: loadingQrKey,
+    runAsync: runAsyncGetQrKey,
+    refreshAsync: refreshAsyncGetQrKey,
+  } = useRequest(getQrKey, {
+    manual: true,
+  });
+
+  /* const {
+    loading: loadingCreateQr,
+    runAsync: runAsyncCreateQr,
+  } = useRequest(createQr, {
+    manual: true,
+  });
+ */
+  const { loading: loadingCheckQr, runAsync: runAsyncCheckQr } = useRequest(
+    checkQr,
+    {
+      manual: true,
     }
-    enqueueSnackbar(result.msg || "登录失败（未知错误）", { variant });
+  );
+
+  const {
+    data: userAccount,
+    loading: loadingUserAccount,
+    runAsync: runAsyncGetUserAccount,
+  } = useRequest(getUserAccount, {
+    manual: true,
+  });
+
+  useEffect(async () => {
+    const result = await runAsyncGetQrKey();
+  }, []);
+
+  const checkLoginStatus = async () => {
+    const result = await runAsyncCheckQr(qrKey.data.unikey);
+    switch (result.code) {
+      case 800:
+        enqueueSnackbar(result.message, { variant: "error" });
+        break;
+      case 801:
+        enqueueSnackbar(result.message, { variant: "info" });
+        break;
+      case 802:
+        enqueueSnackbar(result.message, { variant: "info" });
+        break;
+      case 803:
+        const userAccount = await runAsyncGetUserAccount(result.cookie);
+        // console.log(userAccount, result);
+        userLogin({
+          profile: userAccount.profile,
+          cookie: result.cookie,
+        });
+        enqueueSnackbar(result.message, { variant: "success" });
+        break;
+    }
+    // enqueueSnackbar(result.message);
+    // console.log(result);
   };
+
+  // const onSubmit = async ({ phone, password }) => {
+  //   const result = await runAsync(phone, password);
+  //   let variant;
+  //   if (result.code === 200) {
+  //     variant = "success";
+  //     result.msg = "登录成功";
+  //     userLogin(result);
+  //     setTimeout(() => {
+  //       navigate(location.state?.from || "/", { replace: true });
+  //     }, 1000);
+  //   } else {
+  //     variant = "error";
+  //   }
+  //   enqueueSnackbar(result.msg || "登录失败（未知错误）", { variant });
+  // };
+
   return (
     <>
       <CssBaseline />
@@ -51,7 +132,60 @@ export const Login = ({ userLogin }) => {
         <Typography component="h1" variant="h5">
           登录
         </Typography>
-        <LoginForm onSubmit={onSubmit} loading={loading} />
+        {/* 手机号登录（已弃用） */}
+        {/* <LoginForm onSubmit={onSubmit} loading={loading} /> */}
+        {/* 二维码登录 */}
+        <Card sx={{ minWidth: 300, minHeight: 350, mt: 2 }}>
+          <CardContent
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              height: 250,
+            }}
+          >
+            {qrKey ? (
+              <>
+                <QRCode
+                  value={
+                    "https://music.163.com/login?codekey=" + qrKey.data.unikey
+                  }
+                />
+              </>
+            ) : (
+              <CircularProgress></CircularProgress>
+            )}
+          </CardContent>
+          <CardActions
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            {qrKey ? (
+              <>
+                <LoadingButton
+                  loading={loadingQrKey}
+                  variant="outlined"
+                  size="large"
+                  sx={{ px: 3 }}
+                  onClick={refreshAsyncGetQrKey}
+                >
+                  刷新
+                </LoadingButton>
+                <LoadingButton
+                  loading={loadingCheckQr}
+                  variant="contained"
+                  size="large"
+                  sx={{ px: 3 }}
+                  onClick={checkLoginStatus}
+                >
+                  登录
+                </LoadingButton>
+              </>
+            ) : null}
+          </CardActions>
+        </Card>
       </Box>
     </>
   );
