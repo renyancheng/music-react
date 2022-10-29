@@ -31,7 +31,7 @@ const PlaylistList = ({ playlistList, loading, variant = "card" }) => {
               {playlistList?.map((playlist) => {
                 return (
                   <Grid xs={6} sm={3} md={2.4} lg={2} key={playlist.id} item>
-                    <Card>
+                    <Card variant="outlined">
                       <CardActionArea
                         onClick={() => {
                           navigate(`/playlist/${playlist.id}`);

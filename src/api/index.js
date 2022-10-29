@@ -34,6 +34,7 @@ export const urls = {
   getPersonalizedMv: "/personalized/mv",
   getLastMv: "/mv/first",
   getQrKey: "/login/qr/key",
+  getUserEvents: "/user/event",
 
   // 操作
   subscribePlaylist: "/playlist/subscribe",
@@ -202,4 +203,9 @@ export function createQr(key) {
 // 检测二维码状态
 export function checkQr(key) {
   return get(urls.checkQr, { key });
+}
+
+// 获取用户动态
+export function getUserEvents(uid) {
+  return get(urls.getUserEvents, { uid });
 }

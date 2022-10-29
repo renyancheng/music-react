@@ -4,8 +4,9 @@ import { store } from "../redux/store";
 // 创建一个独立的axios实例
 const service = axios.create({
   // 设置baseUr地址,如果通过proxy跨域可直接填写base地址
-  baseURL: "https://neteasemusicapi.vercel.app",
-  // baseURL: "https://netease-cloud-music-api-gamma.vercel.app",
+  // baseURL: "https://neteasemusicapi.vercel.app",
+  baseURL: "http://guowei.fun:3000",
+  // baseURL: "http://localhost:4000",
   // 定义统一的请求头部
   headers: {},
   // 配置请求超时时间
@@ -19,7 +20,7 @@ service.interceptors.request.use((config) => {
   // 自定义header，可添加项目token
   // console.log(config);
   if (state.auth.cookie) config.params.cookie = state.auth.cookie;
-  config.params.realIP = "183.197.189.234";
+  config.params.realIP = "183.197.189.111";
   config.params.timestamp = Date.now();
   return config;
 });

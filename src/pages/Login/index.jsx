@@ -10,8 +10,12 @@ import {
   Button,
   CircularProgress,
   CardActions,
+  Tab,
 } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
+import TabContext from "@mui/lab/TabContext";
+import TabList from "@mui/lab/TabList";
+import TabPanel from "@mui/lab/TabPanel";
 import { QRCode } from "react-qrcode";
 import { useRequest } from "ahooks";
 import { useSnackbar } from "notistack";
@@ -36,7 +40,7 @@ export const Login = ({ userLogin }) => {
 
   // console.log(location)
 
-  // const { loading, run, runAsync } = useRequest(loginByPhone, { manual: true });
+  const { loading, run, runAsync } = useRequest(loginByPhone, { manual: true });
 
   const {
     data: qrKey,
@@ -68,6 +72,11 @@ export const Login = ({ userLogin }) => {
   } = useRequest(getUserAccount, {
     manual: true,
   });
+  const [value, setValue] = React.useState("1");
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
   useEffect(async () => {
     const result = await runAsyncGetQrKey();
@@ -99,21 +108,21 @@ export const Login = ({ userLogin }) => {
     // console.log(result);
   };
 
-  // const onSubmit = async ({ phone, password }) => {
-  //   const result = await runAsync(phone, password);
-  //   let variant;
-  //   if (result.code === 200) {
-  //     variant = "success";
-  //     result.msg = "登录成功";
-  //     userLogin(result);
-  //     setTimeout(() => {
-  //       navigate(location.state?.from || "/", { replace: true });
-  //     }, 1000);
-  //   } else {
-  //     variant = "error";
-  //   }
-  //   enqueueSnackbar(result.msg || "登录失败（未知错误）", { variant });
-  // };
+  const onSubmit = async ({ phone, password }) => {
+    const result = await runAsync(phone, password);
+    let variant;
+    if (result.code === 200) {
+      variant = "success";
+      result.msg = "登录成功";
+      userLogin(result);
+      setTimeout(() => {
+        navigate(location.state?.from || "/", { replace: true });
+      }, 1000);
+    } else {
+      variant = "error";
+    }
+    enqueueSnackbar(result.msg || "登录失败（未知错误）", { variant });
+  };
 
   return (
     <>
@@ -132,60 +141,74 @@ export const Login = ({ userLogin }) => {
         <Typography component="h1" variant="h5">
           登录
         </Typography>
-        {/* 手机号登录（已弃用） */}
-        {/* <LoginForm onSubmit={onSubmit} loading={loading} /> */}
-        {/* 二维码登录 */}
-        <Card sx={{ minWidth: 300, minHeight: 350, mt: 2 }}>
-          <CardContent
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              height: 250,
-            }}
-          >
-            {qrKey ? (
-              <>
-                <QRCode
-                  value={
-                    "https://music.163.com/login?codekey=" + qrKey.data.unikey
-                  }
-                />
-              </>
-            ) : (
-              <CircularProgress></CircularProgress>
-            )}
-          </CardContent>
-          <CardActions
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-            }}
-          >
-            {qrKey ? (
-              <>
-                <LoadingButton
-                  loading={loadingQrKey}
-                  variant="outlined"
-                  size="large"
-                  sx={{ px: 3 }}
-                  onClick={refreshAsyncGetQrKey}
-                >
-                  刷新
-                </LoadingButton>
-                <LoadingButton
-                  loading={loadingCheckQr}
-                  variant="contained"
-                  size="large"
-                  sx={{ px: 3 }}
-                  onClick={checkLoginStatus}
-                >
-                  登录
-                </LoadingButton>
-              </>
-            ) : null}
-          </CardActions>
-        </Card>
+        <TabContext value={value}>
+          <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+            <TabList onChange={handleChange} aria-label="lab API tabs example">
+              <Tab label="手机号登录" value="1" />
+              <Tab label="二维码登录" value="2" />
+            </TabList>
+          </Box>
+          <TabPanel value="1">
+            {/* 手机号登录 */}
+            <LoginForm onSubmit={onSubmit} loading={loading} />
+          </TabPanel>
+          <TabPanel value="2">
+            {/* 二维码登录 */}
+            <Card sx={{ minWidth: 300, minHeight: 350, mt: 2 }}>
+              <CardContent
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  height: 250,
+                }}
+              >
+                {qrKey ? (
+                  <>
+                    <QRCode
+                      value={
+                        "https://music.163.com/login?codekey=" +
+                        qrKey.data.unikey
+                      }
+                    />
+                  </>
+                ) : (
+                  <CircularProgress></CircularProgress>
+                )}
+              </CardContent>
+              <CardActions
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
+                {qrKey ? (
+                  <>
+                    <LoadingButton
+                      loading={loadingQrKey}
+                      variant="outlined"
+                      size="large"
+                      sx={{ px: 3 }}
+                      onClick={refreshAsyncGetQrKey}
+                    >
+                      刷新
+                    </LoadingButton>
+                    <LoadingButton
+                      loading={loadingCheckQr}
+                      variant="contained"
+                      size="large"
+                      sx={{ px: 3 }}
+                      onClick={checkLoginStatus}
+                    >
+                      登录
+                    </LoadingButton>
+                  </>
+                ) : null}
+              </CardActions>
+            </Card>
+          </TabPanel>
+          <TabPanel value="3">Item Three</TabPanel>
+        </TabContext>
       </Box>
     </>
   );
