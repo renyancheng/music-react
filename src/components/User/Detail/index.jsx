@@ -16,10 +16,11 @@ import {
   Avatar,
   Skeleton,
 } from "@mui/material";
+import { formatTime } from "../../../utils/";
 import moment from "moment";
 import Description from "../../Description";
 
-moment.locale("zh-cn");
+// moment.locale("zh-cn");
 
 export const UserDetail = ({ detail, profile }) => {
   return (
@@ -133,7 +134,7 @@ export const UserDetail = ({ detail, profile }) => {
                   />
                   <Description
                     name="注册时间"
-                    value={moment(detail.createTime).fromNow()}
+                    value={formatTime(detail.createTime)}
                   />
                 </Grid>
               </CardContent>

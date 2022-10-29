@@ -17,6 +17,7 @@ import {
   Avatar,
 } from "@mui/material";
 import moment from "moment";
+import { formatTime } from "../../../utils";
 import numeral from "numeral";
 import Description from "../../Description";
 
@@ -170,17 +171,21 @@ export const PlaylistDetail = ({
                   >
                     标签：
                     <Stack direction="row" spacing={1}>
-                      {detail.tags.map((tag) => {
-                        return (
-                          <Chip
-                            color="primary"
-                            size="small"
-                            variant="outlined"
-                            label={tag}
-                            key={tag}
-                          />
-                        );
-                      })}
+                      {detail.tags.length !== 0 ? (
+                        detail.tags.map((tag) => {
+                          return (
+                            <Chip
+                              color="primary"
+                              size="small"
+                              variant="outlined"
+                              label={tag}
+                              key={tag}
+                            />
+                          );
+                        })
+                      ) : (
+                        <>此歌单无标签</>
+                      )}
                     </Stack>
                   </Typography>
                 </Box>
@@ -199,7 +204,7 @@ export const PlaylistDetail = ({
                 />
                 <Description
                   name="更新时间"
-                  value={moment(detail.updateTime).fromNow()}
+                  value={formatTime(detail.updateTime)}
                 />
               </Grid>
             </CardContent>

@@ -43,22 +43,18 @@ const PlaylistList = ({ playlistList, loading, variant = "card" }) => {
                             alt="green iguana"
                             image={playlist?.picUrl || playlist?.coverImgUrl}
                             loading="lazy"
+                            sx={{
+                              transition: "all 300ms linear",
+                              "&:hover": {
+                                transform: "scale(1.2)",
+                                transition: "all 300ms linear",
+                              },
+                            }}
                           />
                         </LazyLoad>
-                        <CardContent>
-                          <Typography variant="body1">
-                            {playlist.name}
-                          </Typography>
-                          <Typography
-                            variant="body2"
-                            color="text.secondary"
-                            sx={{ display: { xs: "none", sm: "block" } }}
-                          >
-                            {playlist.copywriter}
-                          </Typography>
-                        </CardContent>
                       </CardActionArea>
                     </Card>
+                    <Typography variant="subtitle1">{playlist.name}</Typography>
                   </Grid>
                 );
               })}

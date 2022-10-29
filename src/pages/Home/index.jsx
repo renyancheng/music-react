@@ -41,7 +41,11 @@ export const Home = ({ isLogin }) => {
           <Title title="每日推荐" />
           {!recommendSongs ? (
             <>
-              <Card>
+              <Card
+                sx={{
+                  mb: 1,
+                }}
+              >
                 <Skeleton variant="rectangular" height={150} />
                 <CardContent>
                   <Skeleton variant="text" sx={{ width: "20%" }} />
@@ -60,7 +64,9 @@ export const Home = ({ isLogin }) => {
                   component="img"
                   image="https://picsum.photos/1920/1080?random"
                   alt="picsum"
-                  sx={{ height: 200 }}
+                  sx={{
+                    height: 200,
+                  }}
                 />
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">

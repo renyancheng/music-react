@@ -13,6 +13,7 @@ import {
   IconButton,
   Icon,
 } from "@mui/material";
+import { formatTime } from "../../../utils/";
 
 const Event = ({ event }) => {
   return (
@@ -26,7 +27,7 @@ const Event = ({ event }) => {
             </IconButton>
           }
           title={event.user.nickname}
-          subheader={event.user.signature}
+          subheader={formatTime(event.eventTime)}
         />
         {/* <CardMedia
           component="img"
