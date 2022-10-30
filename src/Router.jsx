@@ -14,6 +14,7 @@ import DiscoverPlaylist from "./pages/Discover/Playlist";
 import DiscoverToplist from "./pages/Discover/Toplist";
 import DiscoverArtist from "./pages/Discover/Artist";
 import DiscoverMv from "./pages/Discover/Mv";
+import Next from "./pages/Next";
 import NotFound from "./pages/NotFound";
 
 export const Router = ({ isLogin }) => {
@@ -38,6 +39,7 @@ export const Router = ({ isLogin }) => {
             path="/login"
             element={<>{isLogin ? <Navigate to="/" /> : <Login />}</>}
           ></Route>
+          <Route path="/next" element={<Next />}></Route>
           <Route path="*" element={<NotFound />}></Route>
         </Route>
       </Routes>

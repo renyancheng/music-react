@@ -9,35 +9,57 @@ import {
   Grid,
   Typography,
   Stack,
+  Tab,
+  Pagination,
 } from "@mui/material";
+import TabContext from "@mui/lab/TabContext";
+import TabList from "@mui/lab/TabList";
+import TabPanel from "@mui/lab/TabPanel";
 import { useRequest } from "ahooks";
 import { useSnackbar } from "notistack";
-import { getPlaylistDetail, getSongDetail, subscribePlaylist } from "../../api";
+import {
+  getPlaylistDetail,
+  getSongDetail,
+  subscribePlaylist,
+  getPlaylistComment,
+} from "../../api";
 import { addSongs } from "../../redux/actions/player";
 import PlaylistDetail from "../../components/Playlist/Detail";
 import SongList from "../../components/SongList";
 import Error from "../../components/Error";
+import Comment from "../../components/Comment";
 
 function getStringTrackIds(trackIds) {
   return trackIds.map((track) => track.id).join(",");
 }
 
 const Playlist = ({ addSongs }) => {
+  const [value, setValue] = React.useState("1");
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
   const params = useParams();
   const { enqueueSnackbar } = useSnackbar();
   const {
     data: playlist,
     loading: loadingPlaylist,
     refresh: refreshPlaylist,
-  } = useRequest(getPlaylistDetail, {
-    defaultParams: [params.id],
-  });
+  } = useRequest(() => getPlaylistDetail(params.id));
   const { runAsync: runGetSongList, loading: loadingSongList } = useRequest(
     getSongDetail,
     {
       manual: true,
-      cacheKey: "staleTime-0",
-      staleTime: 0,
+    }
+  );
+
+  // 歌单评论
+  const [playlistCommentPage, setPlaylistCommentPage] = useState(1);
+  const { data: playlistComment, loading: loadingPlaylistComment } = useRequest(
+    () => getPlaylistComment(params.id, playlistCommentPage),
+    {
+      refreshDeps: [playlistCommentPage],
     }
   );
 
@@ -46,8 +68,8 @@ const Playlist = ({ addSongs }) => {
       manual: true,
     });
 
+  //等待获取歌单所有id，再使用获取歌曲列表接口获取所有歌曲
   const [songList, setSongList] = useState(undefined);
-
   useEffect(async () => {
     if (playlist) {
       const result = await runGetSongList(
@@ -110,13 +132,45 @@ const Playlist = ({ addSongs }) => {
               </Box>
               <Box>
                 <Card>
-                  <CardContent>
-                    {loadingSongList ? (
-                      <Skeleton variant="rectangular" height={350} />
-                    ) : (
-                      <SongList songList={songList} />
-                    )}
-                  </CardContent>
+                  <TabContext value={value}>
+                    <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+                      <TabList onChange={handleChange} variant="fullWidth">
+                        <Tab label="歌曲" value="1" />
+                        <Tab label="评论" value="2" />
+                        <Tab label="推荐" value="3" />
+                      </TabList>
+                    </Box>
+                    <TabPanel value="1">
+                      <CardContent>
+                        {loadingSongList ? (
+                          <Skeleton variant="rectangular" height={350} />
+                        ) : (
+                          <SongList songList={songList} />
+                        )}
+                      </CardContent>
+                    </TabPanel>
+                    <TabPanel value="2">
+                      {!loadingPlaylistComment ? (
+                        <>
+                          <Comment comments={playlistComment.comments} />
+                          <Pagination
+                            count={playlistComment.total}
+                            page={playlistCommentPage}
+                            onChange={(_, newPage) =>
+                              setPlaylistCommentPage(newPage)
+                            }
+                            variant="outlined"
+                            color="primary"
+                          />
+                        </>
+                      ) : (
+                        <>
+                          <Skeleton variant="rectangular" height={400} />
+                        </>
+                      )}
+                    </TabPanel>
+                    <TabPanel value="3">推荐歌单</TabPanel>
+                  </TabContext>
                 </Card>
               </Box>
             </>

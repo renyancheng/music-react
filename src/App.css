@@ -1,13 +1,17 @@
+/* @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@1,100&display=swap"); */
 * {
   outline: none;
 }
-ƒ .scrollbar-hidden,
+.scrollbar-hidden,
 html {
   scrollbar-width: none;
   -ms-overflow-style: none;
-  margin: 0;
-  padding: 0;
+  /* margin: 0; */
+  /* padding: 0; */
 }
+/* body {
+  font-family: "Noto Sans", sans-serif;
+} */
 ::-webkit-scrollbar {
   display: none;
 }

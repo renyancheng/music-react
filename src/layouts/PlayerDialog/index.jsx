@@ -185,6 +185,7 @@ const PlayerDialog = ({ songs, current, src, updateSetting, lyric, mode }) => {
                   songs={songs}
                   mode={mode}
                   toggleMode={toggleMode}
+                  setPlayerDialog={setPlayerDialog}
                 />
               </Grid>
               <Grid

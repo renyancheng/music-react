@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAudioPlayer, useAudioPosition } from "react-use-audio-player";
 import {
   Stack,
@@ -26,7 +27,9 @@ const AudioPlayer = ({
   current,
   mode,
   toggleMode,
+  setPlayerDialog,
 }) => {
+  const navigate = useNavigate();
   const [progress, setProgress] = useState(0);
   const [playlistDialog, setPlaylistDialog] = useState(false);
   const { togglePlayPause, play, ready, loading, playing, volume } =
@@ -129,7 +132,16 @@ const AudioPlayer = ({
             justifyContent="center"
             alignItems="center"
           >
-            <IconButton color="inherit" onClick={() => setPlaylistDialog(true)}>
+            {/* <IconButton color="inherit" onClick={() => setPlaylistDialog(true)}>
+              <Icon>queue_music</Icon>
+            </IconButton> */}
+            <IconButton
+              color="inherit"
+              onClick={() => {
+                setPlayerDialog(false);
+                navigate("/next");
+              }}
+            >
               <Icon>queue_music</Icon>
             </IconButton>
             <IconButton color="inherit" onClick={() => changeSong(current - 1)}>

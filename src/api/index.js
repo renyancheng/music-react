@@ -35,6 +35,7 @@ export const urls = {
   getLastMv: "/mv/first",
   getQrKey: "/login/qr/key",
   getUserEvents: "/user/event",
+  getPlaylistComment: "/comment/playlist",
 
   // 操作
   subscribePlaylist: "/playlist/subscribe",
@@ -208,4 +209,13 @@ export function checkQr(key) {
 // 获取用户动态
 export function getUserEvents(uid) {
   return get(urls.getUserEvents, { uid });
+}
+
+// 获取歌单评论
+export function getPlaylistComment(id, page) {
+  return get(urls.getPlaylistComment, {
+    id,
+    limit: 20,
+    offset: (page - 1) * 20,
+  });
 }
