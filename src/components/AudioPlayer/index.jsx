@@ -78,7 +78,7 @@ const AudioPlayer = ({
     changeSong(current - 1);
   });
   useKeyPress(["rightarrow"], () => {
-    changeSong(current - 1);
+    changeSong(current + 1);
   });
 
   const { percentComplete, duration, seek, position } = useAudioPosition({

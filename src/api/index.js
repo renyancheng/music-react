@@ -36,6 +36,7 @@ export const urls = {
   getQrKey: "/login/qr/key",
   getUserEvents: "/user/event",
   getPlaylistComment: "/comment/playlist",
+  getRelatedPlaylist: "/related/playlist",
 
   // 操作
   subscribePlaylist: "/playlist/subscribe",
@@ -218,4 +219,9 @@ export function getPlaylistComment(id, page) {
     limit: 20,
     offset: (page - 1) * 20,
   });
+}
+
+//获取相似歌单
+export function getRelatedPlaylist(id) {
+  return get(urls.getRelatedPlaylist, { id });
 }

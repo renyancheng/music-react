@@ -22,9 +22,11 @@ import {
   getSongDetail,
   subscribePlaylist,
   getPlaylistComment,
+  getRelatedPlaylist,
 } from "../../api";
 import { addSongs } from "../../redux/actions/player";
 import PlaylistDetail from "../../components/Playlist/Detail";
+import PlaylistList from "../../components/Playlist/List";
 import SongList from "../../components/SongList";
 import Error from "../../components/Error";
 import Comment from "../../components/Comment";
@@ -46,7 +48,9 @@ const Playlist = ({ addSongs }) => {
     data: playlist,
     loading: loadingPlaylist,
     refresh: refreshPlaylist,
-  } = useRequest(() => getPlaylistDetail(params.id));
+  } = useRequest(() => getPlaylistDetail(params.id), {
+    refreshDeps: [params.id],
+  });
   const { runAsync: runGetSongList, loading: loadingSongList } = useRequest(
     getSongDetail,
     {
@@ -59,7 +63,7 @@ const Playlist = ({ addSongs }) => {
   const { data: playlistComment, loading: loadingPlaylistComment } = useRequest(
     () => getPlaylistComment(params.id, playlistCommentPage),
     {
-      refreshDeps: [playlistCommentPage],
+      refreshDeps: [playlistCommentPage, params.id],
     }
   );
 
@@ -67,6 +71,10 @@ const Playlist = ({ addSongs }) => {
     useRequest(subscribePlaylist, {
       manual: true,
     });
+
+  const { data: relatedPlaylist, loading: loadingRelatedPlaylist } = useRequest(
+    () => getRelatedPlaylist(params.id)
+  );
 
   //等待获取歌单所有id，再使用获取歌曲列表接口获取所有歌曲
   const [songList, setSongList] = useState(undefined);
@@ -169,7 +177,12 @@ const Playlist = ({ addSongs }) => {
                         </>
                       )}
                     </TabPanel>
-                    <TabPanel value="3">推荐歌单</TabPanel>
+                    <TabPanel value="3">
+                      <PlaylistList
+                        playlistList={relatedPlaylist?.playlists}
+                        loading={loadingRelatedPlaylist}
+                      />
+                    </TabPanel>
                   </TabContext>
                 </Card>
               </Box>
