@@ -12,6 +12,9 @@ html {
 /* body {
   font-family: "Noto Sans", sans-serif;
 } */
+.MuiLinearProgress-bar {
+  transition: none;
+}
 ::-webkit-scrollbar {
   display: none;
 }

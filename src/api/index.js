@@ -105,8 +105,8 @@ export function getSearchSuggest(keywords) {
 }
 
 // 获取搜索结果
-export function getSearchResult(keywords) {
-  return get(urls.getSearchResult, { keywords });
+export function getSearchResult(keywords, type = 1) {
+  return get(urls.getSearchResult, { keywords, type });
 }
 
 // 获取精品歌单
