@@ -50,6 +50,12 @@ export default function player(preState = initState, { type, data }) {
       let setting = { ...preState.setting, ...data };
       // set("setting", setting);
       return { ...preState, setting };
+    case DELETE_SONG:
+      let songs = preState.songs;
+      data.forEach((willDeletedSongId) => {
+        songs = songs.filter((song) => song.id !== willDeletedSongId);
+      });
+      return { ...preState, songs };
     default:
       return preState;
   }
