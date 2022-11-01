@@ -175,6 +175,7 @@ export const Home = ({ isLogin, songs, updateSetting, addSongs }) => {
       <Title title="推荐歌单" />
       <PlaylistList
         playlistList={isLogin ? playlistList?.recommend : playlistList?.result}
+        loading={loadingPlaylistList}
       />
     </>
   );

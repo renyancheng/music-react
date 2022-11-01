@@ -78,10 +78,16 @@ const User = () => {
             </Box>
             <TabPanel value="1">
               <Title title={`Ta创建的歌单`} />
-              <PlaylistList playlistList={userPlaylist} />
+              <PlaylistList
+                playlistList={userPlaylist}
+                loading={loadingPlaylists}
+              />
               {/* <Divider sx={{ my: 5 }} /> */}
               <Title title={`Ta收藏的歌单`} />
-              <PlaylistList playlistList={otherPlaylist} />
+              <PlaylistList
+                playlistList={otherPlaylist}
+                loading={loadingPlaylists}
+              />
             </TabPanel>
             <TabPanel value="2">
               <Events events={userEvents?.events} loading={loadingUserEvents} />

@@ -101,13 +101,13 @@ const Search = () => {
           helperText={errors.keywords ? errors.keywords.message : null}
           sx={{ mb: 0 }}
         />
-        {loadingSongs ||
+        {/* {loadingSongs ||
         loadingPlaylists ||
         loadingMvs ||
         loadingArtists ||
         loadingUsers ? (
           <LinearProgress />
-        ) : null}
+        ) : null} */}
       </Box>
       <Grid container spacing={2}>
         {loadingSongs ||
@@ -121,7 +121,7 @@ const Search = () => {
                 <>
                   <Grid xs={12} md={7} item>
                     <Title title="歌曲" />
-                    <SongList songList={searchResult?.songs} />
+                    <SongList songList={searchResult?.songs} isGrid />
                   </Grid>
                   <Grid xs={12} md={5} item>
                     <Title title="歌手" />
@@ -129,7 +129,11 @@ const Search = () => {
                   </Grid>
                   <Grid xs={12} item>
                     <Title title="歌单" />
-                    <PlaylistList playlistList={searchResult?.playlists} />
+                    <PlaylistList
+                      playlistList={searchResult?.playlists}
+                      loading={loadingPlaylists}
+                      // variant="list"
+                    />
                   </Grid>
                   <Grid xs={12} item>
                     <Title title="MV" />

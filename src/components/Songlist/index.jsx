@@ -136,7 +136,7 @@ const SongList = ({ songList, songs, current, updateSetting, addSongs }) => {
           })}
         </List>
       ) : (
-        <></>
+        <>暂无歌曲</>
       )}
     </>
   );

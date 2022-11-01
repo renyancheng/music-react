@@ -11,23 +11,12 @@ const Toplist = () => {
 
   return (
     <>
-      {loadingToplist ? (
-        <>
-          <Grid container>
-            <Grid xs={12} md={12} item>
-              <Title title="全部排行榜" />
-              <Skeleton height={300} variant="rectangular" />
-            </Grid>
-          </Grid>
-        </>
-      ) : (
-        <Grid container>
-          <Grid xs={12} item>
-            <Title title="全部排行榜" />
-            <PlaylistList playlistList={toplist.list} variant="card" />
-          </Grid>
+      <Grid container>
+        <Grid xs={12} item>
+          <Title title="全部排行榜" />
+          <PlaylistList playlistList={toplist?.list} loading={loadingToplist} />
         </Grid>
-      )}
+      </Grid>
     </>
   );
 };
