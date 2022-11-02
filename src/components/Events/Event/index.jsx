@@ -20,7 +20,7 @@ const Event = ({ event }) => {
     <>
       <Card sx={{ my: 1 }} variant="outlined">
         <CardHeader
-          avatar={<Avatar src={event.user.avatarUrl}></Avatar>}
+          avatar={<Avatar src={event.user.avatarUrl + "?param=30y30"}></Avatar>}
           action={
             <IconButton aria-label="settings">
               <Icon>more_vert</Icon>

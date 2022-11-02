@@ -52,7 +52,8 @@ const PlaylistList = ({ playlistList, loading, variant = "card" }) => {
                                 component="img"
                                 alt="green iguana"
                                 image={
-                                  playlist?.picUrl || playlist?.coverImgUrl
+                                  (playlist?.picUrl || playlist?.coverImgUrl) +
+                                  "?param=200y200"
                                 }
                                 loading="lazy"
                                 sx={{
@@ -96,7 +97,10 @@ const PlaylistList = ({ playlistList, loading, variant = "card" }) => {
                               width={45}
                               height={45}
                               effect="opacity"
-                              src={playlist.coverImgUrl || playlist.picUrl}
+                              src={
+                                (playlist.coverImgUrl || playlist.picUrl) +
+                                "?param=100y100"
+                              }
                               placeholderSrc={
                                 playlist.coverImgUrl || playlist.picUrl
                               }

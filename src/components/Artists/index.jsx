@@ -37,7 +37,7 @@ const Artists = ({ artists, variant = "card" }) => {
                         <CardMedia
                           component="img"
                           height={120}
-                          image={artist.picUrl}
+                          image={artist.picUrl + "?param=100y100"}
                           alt={artist.name}
                           loading="lazy"
                         />
@@ -83,7 +83,7 @@ const Artists = ({ artists, variant = "card" }) => {
                       <LazyLoad>
                         <Avatar
                           alt={artist.name}
-                          src={artist.img1v1Url}
+                          src={artist.img1v1Url + "?param=50y50"}
                           loading="lazy"
                           variant="rounded"
                         />

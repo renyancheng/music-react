@@ -43,7 +43,7 @@ export const UserDetail = ({ detail, profile }) => {
                 <Paper>
                   <Avatar
                     alt={detail.profile.nickname}
-                    src={detail.profile.avatarUrl}
+                    src={detail.profile.avatarUrl + "?param=400y400"}
                     sx={{ width: 220, height: 220, borderRadius: 3 }}
                   ></Avatar>
                 </Paper>

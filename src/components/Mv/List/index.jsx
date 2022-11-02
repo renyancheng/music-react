@@ -26,7 +26,7 @@ const MvList = ({ mvList }) => {
                 <LazyLoad>
                   <CardMedia
                     component="img"
-                    image={mv.cover || mv.picUrl}
+                    image={(mv.cover || mv.picUrl) + "?param=340y200"}
                     alt={mv.name}
                   />
                 </LazyLoad>

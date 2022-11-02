@@ -190,7 +190,7 @@ export const Header = ({ isLogin, profile, userLogout }) => {
                   >
                     <Avatar
                       alt={profile?.nickname}
-                      src={profile?.avatarUrl}
+                      src={profile?.avatarUrl + "?param=50y50"}
                       sx={{ width: 36, height: 36 }}
                     />
                   </IconButton>

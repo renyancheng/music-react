@@ -52,7 +52,7 @@ export const PlaylistDetail = ({
               <Paper>
                 <Avatar
                   alt={detail.name}
-                  src={detail.coverImgUrl}
+                  src={detail.coverImgUrl + "?param=400y400"}
                   sx={{ width: 220, height: 220, borderRadius: 3 }}
                 ></Avatar>
               </Paper>
@@ -150,7 +150,7 @@ export const PlaylistDetail = ({
                         avatar={
                           <Avatar
                             alt={detail.creator.nickname}
-                            src={detail.creator.avatarUrl}
+                            src={detail.creator.avatarUrl + "?param=50y50"}
                           />
                         }
                         label={detail.creator.nickname}

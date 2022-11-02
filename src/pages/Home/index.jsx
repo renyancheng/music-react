@@ -104,7 +104,7 @@ export const Home = ({ isLogin, songs, updateSetting, addSongs }) => {
                         >
                           <CardMedia
                             component="img"
-                            image={song.al.picUrl}
+                            image={song.al.picUrl + "?param=100y100"}
                             sx={{
                               mx: 2,
                               my: 2,

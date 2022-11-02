@@ -18,7 +18,7 @@ const Comment = ({ comments }) => {
             <LazyLoad>
               <Avatar
                 alt={comment.user.nickname}
-                src={comment.user.avatarUrl}
+                src={comment.user.avatarUrl + "?param=30y30"}
               />
             </LazyLoad>
           </ListItemAvatar>

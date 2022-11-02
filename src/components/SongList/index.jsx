@@ -67,7 +67,7 @@ const SongList = ({ songList, songs, current, updateSetting, addSongs }) => {
                     {song.id !== songs[current]?.id ? (
                       <Avatar
                         alt={song.name}
-                        src={song.al.picUrl}
+                        src={song.al.picUrl + "?param=50y50"}
                         loading="lazy"
                         variant="rounded"
                       />
