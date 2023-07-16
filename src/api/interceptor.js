@@ -6,7 +6,7 @@ const service = axios.create({
   // 设置baseUr地址,如果通过proxy跨域可直接填写base地址
   // baseURL: "https://neteasemusicapi.vercel.app",
   // baseURL: "https://api-music.imsyy.top/",
-  baseURL: "https://wyyapi.kugoutg.cn/",
+  baseURL: "http://cloud-music.pl-fe.cn/",
   // baseURL: "http://localhost:4000",
   // 定义统一的请求头部
   headers: {},

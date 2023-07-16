@@ -12,6 +12,7 @@
     "@emotion/styled": "^11.10.5",
     "@fontsource/roboto": "^4.5.8",
     "@mebtte/react-lrc": "^1.0.2",
+    "@mui/icons-material": "^5.14.0",
     "@mui/joy": "^5.0.0-alpha.48",
     "@mui/lab": "^5.0.0-alpha.68",
     "@mui/material": "^5.4.1",
