@@ -116,10 +116,10 @@ const AudioPlayer = ({
               boxShadow: 1,
             }}
           />
-          <Typography variant="body1" component="div" align="center">
+          <Typography variant="subtitle1" component="div" align="center">
             {currentSong.name}
           </Typography>
-          <Typography variant="body2" component="div" align="center">
+          <Typography variant="subtitle2" component="div" align="center">
             {currentSong.ar
               .map((ar) => {
                 return ar.name;

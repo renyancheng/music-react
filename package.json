@@ -8,6 +8,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@applemusic-like-lyrics/react": "^0.0.10",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@fontsource/roboto": "^4.5.8",
@@ -20,6 +21,7 @@
     "ahooks": "^3.1.9",
     "axios": "^0.25.0",
     "lockr": "^0.9.0-beta.0",
+    "lyric-parser": "^1.0.1",
     "material-ui-confirm": "3.0.3",
     "material-ui-popup-state": "^2.0.0",
     "moment": "^2.29.1",
