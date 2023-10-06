@@ -21,7 +21,6 @@ import { updateSetting } from "../../redux/actions/player";
 import { getSongUrl, getSongLyric } from "../../api";
 import AudioPlayer from "../../components/AudioPlayer";
 import Lyric from "../../components/Lyric";
-import Lyric2 from "../../components/Lyric2";
 
 const PlayerDialog = ({ songs, current, src, updateSetting, lyric, mode }) => {
   const { md } = useResponsive();
