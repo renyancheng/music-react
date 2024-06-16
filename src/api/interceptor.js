@@ -4,9 +4,6 @@ import { store } from "../redux/store";
 // 创建一个独立的axios实例
 const service = axios.create({
   // 设置baseUr地址,如果通过proxy跨域可直接填写base地址
-  // baseURL: "https://neteasemusicapi.vercel.app",
-  // baseURL: "https://api-music.imsyy.top/",
-  // baseURL: "http://cloud-music.pl-fe.cn/",
   // baseURL: "http://localhost:4000",
   baseURL: "https://mu-api.yuk0.com/",
   // 定义统一的请求头部

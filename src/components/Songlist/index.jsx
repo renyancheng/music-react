@@ -28,10 +28,12 @@ const SongList = ({ songList, songs, current, updateSetting, addSongs }) => {
     addSongs({
       songs: [song],
     });
+    
     updateSetting({
       // current: songs.length - 1 === -1 ? 0 : songs.length - 1,
       current: 0,
     });
+
 
     /* new Promise((resolve, reject) => {
       console.log(songs[songs.length - 1], songs.length);

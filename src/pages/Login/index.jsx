@@ -207,7 +207,6 @@ export const Login = ({ userLogin }) => {
               </CardActions>
             </Card>
           </TabPanel>
-          <TabPanel value="3">Item Three</TabPanel>
         </TabContext>
       </Box>
     </>
