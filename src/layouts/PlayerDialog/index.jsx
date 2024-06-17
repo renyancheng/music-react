@@ -12,6 +12,7 @@ import {
 	Grid,
 	Box,
 } from "@mui/material";
+import AudiotrackIcon from '@mui/icons-material/Audiotrack';
 import pubsub from "pubsub-js";
 import { useRequest, useResponsive, useKeyPress } from "ahooks";
 import { updateSetting } from "../../redux/actions/player";
@@ -29,13 +30,11 @@ const PlayerDialog = ({ songs, current, src, updateSetting, lyric, mode }) => {
 		setPlayerDialog(open);
 	};
 
-	const { runAsync: runGetSongUrl, refreshAsync: refreshGetSongUrl } = useRequest(
-		() => getSongUrl(songs[current].id), { manual: true }
-	);
+	const { runAsync: runGetSongUrl, refreshAsync: refreshGetSongUrl } =
+		useRequest(() => getSongUrl(songs[current].id), { manual: true });
 
-	const { runAsync: runGetSongLyric, refreshAsync: refreshGetSongLyric } = useRequest(
-		() => getSongLyric(songs[current].id), { manual: true }
-	);
+	const { runAsync: runGetSongLyric, refreshAsync: refreshGetSongLyric } =
+		useRequest(() => getSongLyric(songs[current].id), { manual: true });
 
 	const fetchSongData = useCallback(async () => {
 		const { data: songUrl } = await runGetSongUrl();
@@ -100,7 +99,8 @@ const PlayerDialog = ({ songs, current, src, updateSetting, lyric, mode }) => {
 				sx={fabStyle}
 				variant={md ? "extended" : "circular"}
 			>
-				<Icon>headphones</Icon>
+				{/* <Icon>headphones</Icon> */}
+				<AudiotrackIcon />
 				{md && (
 					<Typography variant="body2" sx={{ ml: 1 }}>
 						{`正在播放：${songs[current]?.name.substr(0, 8)}...`}
@@ -119,7 +119,17 @@ const PlayerDialog = ({ songs, current, src, updateSetting, lyric, mode }) => {
 					backgroundColor: "transparent",
 				}}
 			>
-				<DialogContent sx={{ p: 0, m: 0, width: "100%", height: "100%", backgroundColor: "transparent" }}>
+				<DialogContent
+					sx={{
+						p: 0,
+						m: 0,
+						width: "100%",
+						height: "100vh",
+						backgroundColor: "transparent",
+						overflow: "hidden",
+						position: "relative",
+					}}
+				>
 					<Box
 						sx={{
 							width: "100%",
@@ -130,7 +140,8 @@ const PlayerDialog = ({ songs, current, src, updateSetting, lyric, mode }) => {
 							backgroundImage: `url(${songs[current]?.al.picUrl})`,
 							backgroundSize: "cover",
 							backgroundPosition: "center",
-							filter: "blur(70px)",
+							filter: "blur(60px) brightness(80%)",
+							transform: "scale(1.2)",
 							transition: "background 0.5s ease 0.5s",
 						}}
 					></Box>
@@ -138,20 +149,35 @@ const PlayerDialog = ({ songs, current, src, updateSetting, lyric, mode }) => {
 						sx={{
 							width: "100%",
 							height: "100%",
-							position: "relative",
 							color: "white",
 							zIndex: 1,
-              backdropFilter: "brightness(70%)"
+							position: "relative",
+							overflow: "hidden",
 						}}
 					>
 						<Toolbar sx={{}}>
 							<Box sx={{ width: "100%" }} />
-							<IconButton color="inherit" onClick={() => togglePlayerDialog(false)}>
+							<IconButton
+								color="inherit"
+								onClick={() => togglePlayerDialog(false)}
+							>
 								<Icon>close</Icon>
 							</IconButton>
 						</Toolbar>
-						<Grid container direction="row" justifyContent="center" alignItems="center">
-							<Grid xs={12} sm={6} item container justifyContent="center" alignItems="center">
+						<Grid
+							container
+							direction="row"
+							justifyContent="center"
+							alignItems="center"
+						>
+							<Grid
+								xs={12}
+								sm={6}
+								item
+								container
+								justifyContent="center"
+								alignItems="center"
+							>
 								<AudioPlayer
 									src={src}
 									currentSong={songs[current]}
@@ -163,7 +189,15 @@ const PlayerDialog = ({ songs, current, src, updateSetting, lyric, mode }) => {
 									setPlayerDialog={setPlayerDialog}
 								/>
 							</Grid>
-							<Grid xs={12} sm={6} item container justifyContent="center" alignContent="center" sx={{ display: { xs: "none", sm: "flex" } }}>
+							<Grid
+								xs={12}
+								sm={6}
+								item
+								container
+								justifyContent="center"
+								alignContent="center"
+								sx={{ display: { xs: "none", sm: "flex" } }}
+							>
 								<Lyric lrc={lyric} currentTime={currentTime} />
 							</Grid>
 						</Grid>
